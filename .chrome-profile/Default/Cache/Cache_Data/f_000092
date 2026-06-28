@@ -1,0 +1,213 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/TacticalComponents.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=d221d861"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport1_react from "/node_modules/.vite/deps/react.js?v=d221d861"; const useState = __vite__cjsImport1_react["useState"];
+export const TacticalButton = ({
+  children,
+  className,
+  variant = "primary",
+  ...props
+}) => {
+  const variants = {
+    primary: "bg-primary-glow text-white hover:brightness-125 shadow-[0_0_28px_rgba(24,83,255,0.36)]",
+    secondary: "bg-white text-surface-lowest hover:bg-secondary-glow hover:text-white",
+    ghost: "bg-white/[0.03] border border-white/10 text-text-dim hover:bg-white/[0.07] hover:text-white hover:border-white/25",
+    error: "bg-accent-error/20 border border-accent-error/40 text-accent-error hover:bg-accent-error/30"
+  };
+  return /* @__PURE__ */ jsxDEV(
+    "button",
+    {
+      className: `
+        clipped-corner inline-flex items-center justify-center px-5 py-3 font-headline font-bold text-xs uppercase transition-all active:scale-95 disabled:pointer-events-none disabled:opacity-50
+        ${variants[variant]}
+        ${className}
+      `,
+      ...props,
+      children
+    },
+    void 0,
+    false,
+    {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+      lineNumber: 18,
+      columnNumber: 5
+    },
+    this
+  );
+};
+_c = TacticalButton;
+export const TacticalCard = ({ children, className, title, subtitle, icon: Icon }) => /* @__PURE__ */ jsxDEV("div", { className: `noise-card p-5 sm:p-6 relative overflow-hidden ${className}`, children: [
+  /* @__PURE__ */ jsxDEV("div", { className: "absolute top-0 right-0 w-10 h-10 border-t border-r border-white/20" }, void 0, false, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+    lineNumber: 41,
+    columnNumber: 5
+  }, this),
+  /* @__PURE__ */ jsxDEV("div", { className: "absolute left-0 top-0 h-full w-[2px] bg-primary-glow/70" }, void 0, false, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+    lineNumber: 42,
+    columnNumber: 5
+  }, this),
+  (title || Icon) && /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between items-start mb-6", children: [
+    /* @__PURE__ */ jsxDEV("div", { children: [
+      title && /* @__PURE__ */ jsxDEV("h3", { className: "font-headline font-bold text-sm uppercase text-white", children: title }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+        lineNumber: 46,
+        columnNumber: 21
+      }, this),
+      subtitle && /* @__PURE__ */ jsxDEV("p", { className: "font-mono text-[10px] text-text-dim uppercase mt-1", children: subtitle }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+        lineNumber: 47,
+        columnNumber: 24
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+      lineNumber: 45,
+      columnNumber: 9
+    }, this),
+    Icon && /* @__PURE__ */ jsxDEV(Icon, { className: "w-5 h-5 text-primary-glow/60" }, void 0, false, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+      lineNumber: 49,
+      columnNumber: 18
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+    lineNumber: 44,
+    columnNumber: 3
+  }, this),
+  children
+] }, void 0, true, {
+  fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+  lineNumber: 40,
+  columnNumber: 1
+}, this);
+_c2 = TacticalCard;
+export const TacticalInput = ({ label, icon: Icon, ...props }) => /* @__PURE__ */ jsxDEV("div", { className: "space-y-2", children: [
+  label && /* @__PURE__ */ jsxDEV("label", { className: "font-headline text-[10px] font-bold text-text-dim uppercase block", children: label }, void 0, false, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+    lineNumber: 63,
+    columnNumber: 15
+  }, this),
+  /* @__PURE__ */ jsxDEV("div", { className: "relative group", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "absolute inset-y-0 left-0 w-[2px] bg-border-tactical group-focus-within:bg-primary-glow transition-colors" }, void 0, false, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+      lineNumber: 65,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(
+      "input",
+      {
+        className: "w-full bg-white/[0.035] border border-white/10 text-white text-sm font-mono py-4 pl-6 pr-12 focus:ring-0 focus:bg-white/[0.07] focus:border-primary-glow/70 transition-all placeholder:text-white/25",
+        ...props
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+        lineNumber: 66,
+        columnNumber: 7
+      },
+      this
+    ),
+    Icon && /* @__PURE__ */ jsxDEV(Icon, { className: "absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/25 group-focus-within:text-primary-glow transition-all" }, void 0, false, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+      lineNumber: 70,
+      columnNumber: 16
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+    lineNumber: 64,
+    columnNumber: 5
+  }, this)
+] }, void 0, true, {
+  fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+  lineNumber: 62,
+  columnNumber: 1
+}, this);
+_c3 = TacticalInput;
+export const TacticalToggle = ({ label, sublabel, description, active, defaultChecked, onToggle }) => {
+  _s();
+  const [internalActive, setInternalActive] = useState(defaultChecked ?? false);
+  const isControlled = active !== void 0;
+  const isActive = isControlled ? active : internalActive;
+  const handleToggle = () => {
+    if (onToggle) {
+      onToggle();
+    }
+    if (!isControlled) {
+      setInternalActive((prev) => !prev);
+    }
+  };
+  return /* @__PURE__ */ jsxDEV("div", { className: "flex items-center justify-between py-3 border-b border-white/5", children: [
+    /* @__PURE__ */ jsxDEV("div", { children: [
+      /* @__PURE__ */ jsxDEV("p", { className: "font-headline text-[11px] uppercase font-bold text-white", children: label }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+        lineNumber: 101,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("p", { className: "text-[9px] text-text-dim font-mono uppercase", children: sublabel ?? description }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+        lineNumber: 102,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+      lineNumber: 100,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV(
+      "button",
+      {
+        onClick: handleToggle,
+        className: `w-10 h-5 p-0.5 flex transition-all ${isActive ? "bg-primary-glow/20 border-primary-glow/50 justify-end" : "bg-white/[0.05] border-border-tactical justify-start"} border`,
+        children: /* @__PURE__ */ jsxDEV("div", { className: `w-3.5 h-3.5 ${isActive ? "bg-primary-glow shadow-[0_0_12px_rgba(24,83,255,0.7)]" : "bg-border-tactical"}` }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+          lineNumber: 108,
+          columnNumber: 9
+        }, this)
+      },
+      void 0,
+      false,
+      {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+        lineNumber: 104,
+        columnNumber: 7
+      },
+      this
+    )
+  ] }, void 0, true, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx",
+    lineNumber: 99,
+    columnNumber: 5
+  }, this);
+};
+_s(TacticalToggle, "xSmC1fYZlubQJF97oqcAG1hFul0=");
+_c4 = TacticalToggle;
+var _c, _c2, _c3, _c4;
+$RefreshReg$(_c, "TacticalButton");
+$RefreshReg$(_c2, "TacticalCard");
+$RefreshReg$(_c3, "TacticalInput");
+$RefreshReg$(_c4, "TacticalToggle");
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+function $RefreshReg$(type, id) {
+  return RefreshRuntime.register(type, "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/TacticalComponents.tsx " + id);
+}
+function $RefreshSig$() {
+  return RefreshRuntime.createSignatureFunctionForTransform();
+}
+
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJtYXBwaW5ncyI6IkFBaUJJOztBQWpCSixTQUFTQSxnQkFBcUY7QUFHdkYsYUFBTUMsaUJBQWlCQSxDQUFDO0FBQUEsRUFDN0JDO0FBQUFBLEVBQ0FDO0FBQUFBLEVBQ0FDLFVBQVU7QUFBQSxFQUNWLEdBQUdDO0FBQ2dHLE1BQU07QUFDekcsUUFBTUMsV0FBVztBQUFBLElBQ2ZDLFNBQVM7QUFBQSxJQUNUQyxXQUFXO0FBQUEsSUFDWEMsT0FBTztBQUFBLElBQ1BDLE9BQU87QUFBQSxFQUNUO0FBRUEsU0FDRTtBQUFBLElBQUM7QUFBQTtBQUFBLE1BQ0MsV0FBVztBQUFBO0FBQUEsVUFFUEosU0FBU0YsT0FBTyxDQUFDO0FBQUEsVUFDakJELFNBQVM7QUFBQTtBQUFBLE1BRWIsR0FBSUU7QUFBQUEsTUFFSEg7QUFBQUE7QUFBQUEsSUFSSDtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUEsRUFTQTtBQUVKO0FBQUVTLEtBekJXVjtBQW1DTixhQUFNVyxlQUFlQSxDQUFDLEVBQUVWLFVBQVVDLFdBQVdVLE9BQU9DLFVBQVVDLE1BQU1DLEtBQXdCLE1BQ2pHLHVCQUFDLFNBQUksV0FBVyxrREFBa0RiLFNBQVMsSUFDekU7QUFBQSx5QkFBQyxTQUFJLFdBQVUsd0VBQWY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUFvRjtBQUFBLEVBQ3BGLHVCQUFDLFNBQUksV0FBVSw2REFBZjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBQXlFO0FBQUEsR0FDdkVVLFNBQVNHLFNBQ1QsdUJBQUMsU0FBSSxXQUFVLHlDQUNiO0FBQUEsMkJBQUMsU0FDRUg7QUFBQUEsZUFBUyx1QkFBQyxRQUFHLFdBQVUsd0RBQXdEQSxtQkFBdEU7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUE0RTtBQUFBLE1BQ3JGQyxZQUFZLHVCQUFDLE9BQUUsV0FBVSxzREFBc0RBLHNCQUFuRTtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBQTRFO0FBQUEsU0FGM0Y7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUdBO0FBQUEsSUFDQ0UsUUFBUSx1QkFBQyxRQUFLLFdBQVUsa0NBQWhCO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FBOEM7QUFBQSxPQUx6RDtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBTUE7QUFBQSxFQUVEZDtBQUFBQSxLQVpIO0FBQUE7QUFBQTtBQUFBO0FBQUEsT0FhQTtBQUNBZSxNQWZXTDtBQXNCTixhQUFNTSxnQkFBZ0JBLENBQUMsRUFBRUMsT0FBT0osTUFBTUMsTUFBTSxHQUFHWCxNQUEwQixNQUM5RSx1QkFBQyxTQUFJLFdBQVUsYUFDWmM7QUFBQUEsV0FBUyx1QkFBQyxXQUFNLFdBQVUscUVBQXFFQSxtQkFBdEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxTQUE0RjtBQUFBLEVBQ3RHLHVCQUFDLFNBQUksV0FBVSxrQkFDYjtBQUFBLDJCQUFDLFNBQUksV0FBVSwrR0FBZjtBQUFBO0FBQUE7QUFBQTtBQUFBLFdBQTJIO0FBQUEsSUFDM0g7QUFBQSxNQUFDO0FBQUE7QUFBQSxRQUNDLFdBQVU7QUFBQSxRQUNWLEdBQUlkO0FBQUFBO0FBQUFBLE1BRk47QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLElBRVk7QUFBQSxJQUVYVyxRQUFRLHVCQUFDLFFBQUssV0FBVSx5SEFBaEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxXQUFxSTtBQUFBLE9BTmhKO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FPQTtBQUFBLEtBVEY7QUFBQTtBQUFBO0FBQUE7QUFBQSxPQVVBO0FBQ0FJLE1BWldGO0FBdUJOLGFBQU1HLGlCQUFpQkEsQ0FBQyxFQUFFRixPQUFPRyxVQUFVQyxhQUFhQyxRQUFRQyxnQkFBZ0JDLFNBQThCLE1BQU07QUFBQUMsS0FBQTtBQUN6SCxRQUFNLENBQUNDLGdCQUFnQkMsaUJBQWlCLElBQUk3QixTQUFTeUIsa0JBQWtCLEtBQUs7QUFDNUUsUUFBTUssZUFBZU4sV0FBV087QUFDaEMsUUFBTUMsV0FBV0YsZUFBZU4sU0FBU0k7QUFFekMsUUFBTUssZUFBZUEsTUFBTTtBQUN6QixRQUFJUCxVQUFVO0FBQ1pBLGVBQVM7QUFBQSxJQUNYO0FBQ0EsUUFBSSxDQUFDSSxjQUFjO0FBQ2pCRCx3QkFBa0IsQ0FBQUssU0FBUSxDQUFDQSxJQUFJO0FBQUEsSUFDakM7QUFBQSxFQUNGO0FBRUEsU0FDRSx1QkFBQyxTQUFJLFdBQVUsa0VBQ2I7QUFBQSwyQkFBQyxTQUNDO0FBQUEsNkJBQUMsT0FBRSxXQUFVLDREQUE0RGYsbUJBQXpFO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFBK0U7QUFBQSxNQUMvRSx1QkFBQyxPQUFFLFdBQVUsZ0RBQWdERyxzQkFBWUMsZUFBekU7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUFxRjtBQUFBLFNBRnZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FHQTtBQUFBLElBQ0E7QUFBQSxNQUFDO0FBQUE7QUFBQSxRQUNDLFNBQVNVO0FBQUFBLFFBQ1QsV0FBVyxzQ0FBc0NELFdBQVcsMERBQTBELHNEQUFzRDtBQUFBLFFBRTVLLGlDQUFDLFNBQUksV0FBVyxlQUFlQSxXQUFXLDBEQUEwRCxvQkFBb0IsTUFBeEg7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUE0SDtBQUFBO0FBQUEsTUFKOUg7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQTtBQUFBLElBS0E7QUFBQSxPQVZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0FXQTtBQUVKO0FBQUVMLEdBNUJXTixnQkFBYztBQUFBLE1BQWRBO0FBQWMsSUFBQVYsSUFBQU0sS0FBQUcsS0FBQWU7QUFBQSxhQUFBeEIsSUFBQTtBQUFBLGFBQUFNLEtBQUE7QUFBQSxhQUFBRyxLQUFBO0FBQUEsYUFBQWUsS0FBQSIsIm5hbWVzIjpbInVzZVN0YXRlIiwiVGFjdGljYWxCdXR0b24iLCJjaGlsZHJlbiIsImNsYXNzTmFtZSIsInZhcmlhbnQiLCJwcm9wcyIsInZhcmlhbnRzIiwicHJpbWFyeSIsInNlY29uZGFyeSIsImdob3N0IiwiZXJyb3IiLCJfYyIsIlRhY3RpY2FsQ2FyZCIsInRpdGxlIiwic3VidGl0bGUiLCJpY29uIiwiSWNvbiIsIl9jMiIsIlRhY3RpY2FsSW5wdXQiLCJsYWJlbCIsIl9jMyIsIlRhY3RpY2FsVG9nZ2xlIiwic3VibGFiZWwiLCJkZXNjcmlwdGlvbiIsImFjdGl2ZSIsImRlZmF1bHRDaGVja2VkIiwib25Ub2dnbGUiLCJfcyIsImludGVybmFsQWN0aXZlIiwic2V0SW50ZXJuYWxBY3RpdmUiLCJpc0NvbnRyb2xsZWQiLCJ1bmRlZmluZWQiLCJpc0FjdGl2ZSIsImhhbmRsZVRvZ2dsZSIsInByZXYiLCJfYzQiXSwiaWdub3JlTGlzdCI6W10sInNvdXJjZXMiOlsiVGFjdGljYWxDb21wb25lbnRzLnRzeCJdLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyB1c2VTdGF0ZSwgdHlwZSBCdXR0b25IVE1MQXR0cmlidXRlcywgdHlwZSBJbnB1dEhUTUxBdHRyaWJ1dGVzLCB0eXBlIFJlYWN0Tm9kZSB9IGZyb20gJ3JlYWN0JztcbmltcG9ydCB0eXBlIHsgTHVjaWRlSWNvbiB9IGZyb20gJ2x1Y2lkZS1yZWFjdCc7XG5cbmV4cG9ydCBjb25zdCBUYWN0aWNhbEJ1dHRvbiA9ICh7XG4gIGNoaWxkcmVuLFxuICBjbGFzc05hbWUsXG4gIHZhcmlhbnQgPSAncHJpbWFyeScsXG4gIC4uLnByb3BzXG59OiBCdXR0b25IVE1MQXR0cmlidXRlczxIVE1MQnV0dG9uRWxlbWVudD4gJiB7IHZhcmlhbnQ/OiAncHJpbWFyeScgfCAnc2Vjb25kYXJ5JyB8ICdnaG9zdCcgfCAnZXJyb3InIH0pID0+IHtcbiAgY29uc3QgdmFyaWFudHMgPSB7XG4gICAgcHJpbWFyeTogJ2JnLXByaW1hcnktZ2xvdyB0ZXh0LXdoaXRlIGhvdmVyOmJyaWdodG5lc3MtMTI1IHNoYWRvdy1bMF8wXzI4cHhfcmdiYSgyNCw4MywyNTUsMC4zNildJyxcbiAgICBzZWNvbmRhcnk6ICdiZy13aGl0ZSB0ZXh0LXN1cmZhY2UtbG93ZXN0IGhvdmVyOmJnLXNlY29uZGFyeS1nbG93IGhvdmVyOnRleHQtd2hpdGUnLFxuICAgIGdob3N0OiAnYmctd2hpdGUvWzAuMDNdIGJvcmRlciBib3JkZXItd2hpdGUvMTAgdGV4dC10ZXh0LWRpbSBob3ZlcjpiZy13aGl0ZS9bMC4wN10gaG92ZXI6dGV4dC13aGl0ZSBob3Zlcjpib3JkZXItd2hpdGUvMjUnLFxuICAgIGVycm9yOiAnYmctYWNjZW50LWVycm9yLzIwIGJvcmRlciBib3JkZXItYWNjZW50LWVycm9yLzQwIHRleHQtYWNjZW50LWVycm9yIGhvdmVyOmJnLWFjY2VudC1lcnJvci8zMCdcbiAgfTtcblxuICByZXR1cm4gKFxuICAgIDxidXR0b24gXG4gICAgICBjbGFzc05hbWU9e2BcbiAgICAgICAgY2xpcHBlZC1jb3JuZXIgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIHB4LTUgcHktMyBmb250LWhlYWRsaW5lIGZvbnQtYm9sZCB0ZXh0LXhzIHVwcGVyY2FzZSB0cmFuc2l0aW9uLWFsbCBhY3RpdmU6c2NhbGUtOTUgZGlzYWJsZWQ6cG9pbnRlci1ldmVudHMtbm9uZSBkaXNhYmxlZDpvcGFjaXR5LTUwXG4gICAgICAgICR7dmFyaWFudHNbdmFyaWFudF19XG4gICAgICAgICR7Y2xhc3NOYW1lfVxuICAgICAgYH1cbiAgICAgIHsuLi5wcm9wc31cbiAgICA+XG4gICAgICB7Y2hpbGRyZW59XG4gICAgPC9idXR0b24+XG4gICk7XG59O1xuXG5pbnRlcmZhY2UgVGFjdGljYWxDYXJkUHJvcHMge1xuICBjaGlsZHJlbjogUmVhY3ROb2RlO1xuICBjbGFzc05hbWU/OiBzdHJpbmc7XG4gIHRpdGxlPzogc3RyaW5nO1xuICBzdWJ0aXRsZT86IHN0cmluZztcbiAgaWNvbj86IEx1Y2lkZUljb247XG59XG5cbmV4cG9ydCBjb25zdCBUYWN0aWNhbENhcmQgPSAoeyBjaGlsZHJlbiwgY2xhc3NOYW1lLCB0aXRsZSwgc3VidGl0bGUsIGljb246IEljb24gfTogVGFjdGljYWxDYXJkUHJvcHMpID0+IChcbiAgPGRpdiBjbGFzc05hbWU9e2Bub2lzZS1jYXJkIHAtNSBzbTpwLTYgcmVsYXRpdmUgb3ZlcmZsb3ctaGlkZGVuICR7Y2xhc3NOYW1lfWB9PlxuICAgIDxkaXYgY2xhc3NOYW1lPVwiYWJzb2x1dGUgdG9wLTAgcmlnaHQtMCB3LTEwIGgtMTAgYm9yZGVyLXQgYm9yZGVyLXIgYm9yZGVyLXdoaXRlLzIwXCI+PC9kaXY+XG4gICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSBsZWZ0LTAgdG9wLTAgaC1mdWxsIHctWzJweF0gYmctcHJpbWFyeS1nbG93LzcwXCI+PC9kaXY+XG4gICAgeyh0aXRsZSB8fCBJY29uKSAmJiAoXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXgganVzdGlmeS1iZXR3ZWVuIGl0ZW1zLXN0YXJ0IG1iLTZcIj5cbiAgICAgICAgPGRpdj5cbiAgICAgICAgICB7dGl0bGUgJiYgPGgzIGNsYXNzTmFtZT1cImZvbnQtaGVhZGxpbmUgZm9udC1ib2xkIHRleHQtc20gdXBwZXJjYXNlIHRleHQtd2hpdGVcIj57dGl0bGV9PC9oMz59XG4gICAgICAgICAge3N1YnRpdGxlICYmIDxwIGNsYXNzTmFtZT1cImZvbnQtbW9ubyB0ZXh0LVsxMHB4XSB0ZXh0LXRleHQtZGltIHVwcGVyY2FzZSBtdC0xXCI+e3N1YnRpdGxlfTwvcD59XG4gICAgICAgIDwvZGl2PlxuICAgICAgICB7SWNvbiAmJiA8SWNvbiBjbGFzc05hbWU9XCJ3LTUgaC01IHRleHQtcHJpbWFyeS1nbG93LzYwXCIgLz59XG4gICAgICA8L2Rpdj5cbiAgICApfVxuICAgIHtjaGlsZHJlbn1cbiAgPC9kaXY+XG4pO1xuXG5pbnRlcmZhY2UgVGFjdGljYWxJbnB1dFByb3BzIGV4dGVuZHMgSW5wdXRIVE1MQXR0cmlidXRlczxIVE1MSW5wdXRFbGVtZW50PiB7XG4gIGxhYmVsPzogc3RyaW5nO1xuICBpY29uPzogTHVjaWRlSWNvbjtcbn1cblxuZXhwb3J0IGNvbnN0IFRhY3RpY2FsSW5wdXQgPSAoeyBsYWJlbCwgaWNvbjogSWNvbiwgLi4ucHJvcHMgfTogVGFjdGljYWxJbnB1dFByb3BzKSA9PiAoXG4gIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS0yXCI+XG4gICAge2xhYmVsICYmIDxsYWJlbCBjbGFzc05hbWU9XCJmb250LWhlYWRsaW5lIHRleHQtWzEwcHhdIGZvbnQtYm9sZCB0ZXh0LXRleHQtZGltIHVwcGVyY2FzZSBibG9ja1wiPntsYWJlbH08L2xhYmVsPn1cbiAgICA8ZGl2IGNsYXNzTmFtZT1cInJlbGF0aXZlIGdyb3VwXCI+XG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIGluc2V0LXktMCBsZWZ0LTAgdy1bMnB4XSBiZy1ib3JkZXItdGFjdGljYWwgZ3JvdXAtZm9jdXMtd2l0aGluOmJnLXByaW1hcnktZ2xvdyB0cmFuc2l0aW9uLWNvbG9yc1wiPjwvZGl2PlxuICAgICAgPGlucHV0IFxuICAgICAgICBjbGFzc05hbWU9XCJ3LWZ1bGwgYmctd2hpdGUvWzAuMDM1XSBib3JkZXIgYm9yZGVyLXdoaXRlLzEwIHRleHQtd2hpdGUgdGV4dC1zbSBmb250LW1vbm8gcHktNCBwbC02IHByLTEyIGZvY3VzOnJpbmctMCBmb2N1czpiZy13aGl0ZS9bMC4wN10gZm9jdXM6Ym9yZGVyLXByaW1hcnktZ2xvdy83MCB0cmFuc2l0aW9uLWFsbCBwbGFjZWhvbGRlcjp0ZXh0LXdoaXRlLzI1XCJcbiAgICAgICAgey4uLnByb3BzfVxuICAgICAgLz5cbiAgICAgIHtJY29uICYmIDxJY29uIGNsYXNzTmFtZT1cImFic29sdXRlIHJpZ2h0LTQgdG9wLTEvMiAtdHJhbnNsYXRlLXktMS8yIHctNCBoLTQgdGV4dC13aGl0ZS8yNSBncm91cC1mb2N1cy13aXRoaW46dGV4dC1wcmltYXJ5LWdsb3cgdHJhbnNpdGlvbi1hbGxcIiAvPn1cbiAgICA8L2Rpdj5cbiAgPC9kaXY+XG4pO1xuXG5pbnRlcmZhY2UgVGFjdGljYWxUb2dnbGVQcm9wcyB7XG4gIGxhYmVsOiBzdHJpbmc7XG4gIHN1YmxhYmVsPzogc3RyaW5nO1xuICBkZXNjcmlwdGlvbj86IHN0cmluZztcbiAgYWN0aXZlPzogYm9vbGVhbjtcbiAgZGVmYXVsdENoZWNrZWQ/OiBib29sZWFuO1xuICBvblRvZ2dsZT86ICgpID0+IHZvaWQ7XG59XG5cbmV4cG9ydCBjb25zdCBUYWN0aWNhbFRvZ2dsZSA9ICh7IGxhYmVsLCBzdWJsYWJlbCwgZGVzY3JpcHRpb24sIGFjdGl2ZSwgZGVmYXVsdENoZWNrZWQsIG9uVG9nZ2xlIH06IFRhY3RpY2FsVG9nZ2xlUHJvcHMpID0+IHtcbiAgY29uc3QgW2ludGVybmFsQWN0aXZlLCBzZXRJbnRlcm5hbEFjdGl2ZV0gPSB1c2VTdGF0ZShkZWZhdWx0Q2hlY2tlZCA/PyBmYWxzZSk7XG4gIGNvbnN0IGlzQ29udHJvbGxlZCA9IGFjdGl2ZSAhPT0gdW5kZWZpbmVkO1xuICBjb25zdCBpc0FjdGl2ZSA9IGlzQ29udHJvbGxlZCA/IGFjdGl2ZSA6IGludGVybmFsQWN0aXZlO1xuXG4gIGNvbnN0IGhhbmRsZVRvZ2dsZSA9ICgpID0+IHtcbiAgICBpZiAob25Ub2dnbGUpIHtcbiAgICAgIG9uVG9nZ2xlKCk7XG4gICAgfVxuICAgIGlmICghaXNDb250cm9sbGVkKSB7XG4gICAgICBzZXRJbnRlcm5hbEFjdGl2ZShwcmV2ID0+ICFwcmV2KTtcbiAgICB9XG4gIH07XG5cbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGp1c3RpZnktYmV0d2VlbiBweS0zIGJvcmRlci1iIGJvcmRlci13aGl0ZS81XCI+XG4gICAgICA8ZGl2PlxuICAgICAgICA8cCBjbGFzc05hbWU9XCJmb250LWhlYWRsaW5lIHRleHQtWzExcHhdIHVwcGVyY2FzZSBmb250LWJvbGQgdGV4dC13aGl0ZVwiPntsYWJlbH08L3A+XG4gICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtWzlweF0gdGV4dC10ZXh0LWRpbSBmb250LW1vbm8gdXBwZXJjYXNlXCI+e3N1YmxhYmVsID8/IGRlc2NyaXB0aW9ufTwvcD5cbiAgICAgIDwvZGl2PlxuICAgICAgPGJ1dHRvblxuICAgICAgICBvbkNsaWNrPXtoYW5kbGVUb2dnbGV9XG4gICAgICAgIGNsYXNzTmFtZT17YHctMTAgaC01IHAtMC41IGZsZXggdHJhbnNpdGlvbi1hbGwgJHtpc0FjdGl2ZSA/ICdiZy1wcmltYXJ5LWdsb3cvMjAgYm9yZGVyLXByaW1hcnktZ2xvdy81MCBqdXN0aWZ5LWVuZCcgOiAnYmctd2hpdGUvWzAuMDVdIGJvcmRlci1ib3JkZXItdGFjdGljYWwganVzdGlmeS1zdGFydCd9IGJvcmRlcmB9XG4gICAgICA+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPXtgdy0zLjUgaC0zLjUgJHtpc0FjdGl2ZSA/ICdiZy1wcmltYXJ5LWdsb3cgc2hhZG93LVswXzBfMTJweF9yZ2JhKDI0LDgzLDI1NSwwLjcpXScgOiAnYmctYm9yZGVyLXRhY3RpY2FsJ31gfT48L2Rpdj5cbiAgICAgIDwvYnV0dG9uPlxuICAgIDwvZGl2PlxuICApO1xufTtcbiJdLCJmaWxlIjoiQzovVXNlcnMvREVMTC9EZXNrdG9wL1ZURC1tYWluL1Zpc3VhbC1UaHJlYWQtRGV0ZWN0aW9uLURhc2hib2FyZC1tYXN0ZXIvc3JjL2NvbXBvbmVudHMvVGFjdGljYWxDb21wb25lbnRzLnRzeCJ9

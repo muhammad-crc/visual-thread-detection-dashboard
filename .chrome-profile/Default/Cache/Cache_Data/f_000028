@@ -1,0 +1,512 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/CamerasScreen.tsx");import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=d221d861"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport1_react from "/node_modules/.vite/deps/react.js?v=d221d861"; const useMemo = __vite__cjsImport1_react["useMemo"]; const useState = __vite__cjsImport1_react["useState"]; const useEffect = __vite__cjsImport1_react["useEffect"];
+import { motion, AnimatePresence } from "/node_modules/.vite/deps/motion_react.js?v=c0f996e9";
+import {
+  Search,
+  Filter,
+  Maximize2,
+  Activity,
+  ImageOff,
+  Video,
+  VideoOff,
+  RefreshCw
+} from "/node_modules/.vite/deps/lucide-react.js?v=741507ac";
+import { TacticalInput, TacticalButton } from "/src/components/TacticalComponents.tsx";
+import { ImageLightbox } from "/src/components/ImageLightbox.tsx";
+import { useAlerts } from "/src/useAlerts.ts";
+import { streamUrl } from "/src/api.ts";
+const RECENT_MS = 5 * 60 * 1e3;
+export const CamerasScreen = () => {
+  _s();
+  const { alerts, connected } = useAlerts();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedId, setSelectedId] = useState(null);
+  const [lightbox, setLightbox] = useState(null);
+  const [liveMode, setLiveMode] = useState(true);
+  const [streamFailed, setStreamFailed] = useState(false);
+  const [streamNonce, setStreamNonce] = useState(0);
+  const cameras = useMemo(() => {
+    const byCam = /* @__PURE__ */ new Map();
+    for (const a of alerts) {
+      if (!byCam.has(a.cameraId)) byCam.set(a.cameraId, []);
+      byCam.get(a.cameraId).push(a);
+    }
+    const now = Date.now();
+    return Array.from(byCam.entries()).map(([id, list]) => {
+      const sorted = [...list].sort((a, b) => +new Date(b.timestamp) - +new Date(a.timestamp));
+      const latest = sorted[0];
+      const recentCritical = sorted.some(
+        (a) => a.severity === "critical" && now - +new Date(a.timestamp) < RECENT_MS
+      );
+      const withImage = sorted.find((a) => a.imageUrl);
+      return {
+        id,
+        name: latest?.location || id,
+        status: recentCritical ? "alert" : connected ? "online" : "offline",
+        thumbnail: withImage?.imageUrl ?? null,
+        total: list.length,
+        critical: list.filter((a) => a.severity === "critical").length,
+        lastSeen: latest?.timestamp ?? null,
+        latest
+      };
+    });
+  }, [alerts, connected]);
+  useEffect(() => {
+    if (!selectedId && cameras.length) setSelectedId(cameras[0].id);
+  }, [cameras, selectedId]);
+  useEffect(() => {
+    setStreamFailed(false);
+    setStreamNonce((n) => n + 1);
+  }, [selectedId]);
+  const filtered = cameras.filter(
+    (cam) => cam.name.toLowerCase().includes(searchQuery.toLowerCase()) || cam.id.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  const selected = cameras.find((c) => c.id === selectedId) || null;
+  const showLive = !!selected && liveMode && !streamFailed;
+  const liveSrc = selected ? `${streamUrl(selected.id)}&n=${streamNonce}` : "";
+  return /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-12 gap-6 h-full", children: [
+    /* @__PURE__ */ jsxDEV(ImageLightbox, { url: lightbox, title: selected?.id, subtitle: selected?.name, onClose: () => setLightbox(null) }, void 0, false, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+      lineNumber: 96,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "col-span-12 lg:col-span-3 flex flex-col gap-4", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ jsxDEV(TacticalInput, { placeholder: "Search nodes...", icon: Search, value: searchQuery, onChange: (e) => setSearchQuery(e.target.value) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 101,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "flex gap-2", children: [
+          /* @__PURE__ */ jsxDEV(TacticalButton, { variant: "ghost", className: "flex-1 text-[10px] py-2", children: [
+            /* @__PURE__ */ jsxDEV(Filter, { className: "w-3 h-3 mr-2" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 104,
+              columnNumber: 15
+            }, this),
+            "Filter"
+          ] }, void 0, true, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 103,
+            columnNumber: 13
+          }, this),
+          /* @__PURE__ */ jsxDEV(TacticalButton, { variant: "ghost", className: "flex-1 text-[10px] py-2", children: [
+            /* @__PURE__ */ jsxDEV(Activity, { className: "w-3 h-3 mr-2" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 108,
+              columnNumber: 15
+            }, this),
+            "Status"
+          ] }, void 0, true, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 107,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 102,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+        lineNumber: 100,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "flex-1 overflow-y-auto space-y-2 custom-scrollbar pr-2", children: [
+        filtered.length === 0 && /* @__PURE__ */ jsxDEV("div", { className: "text-[10px] font-mono text-text-dim/50 uppercase p-3", children: "No cameras have reported yet." }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 116,
+          columnNumber: 11
+        }, this),
+        filtered.map(
+          (cam) => /* @__PURE__ */ jsxDEV(
+            "button",
+            {
+              onClick: () => setSelectedId(cam.id),
+              className: `
+                w-full text-left p-3 border transition-all duration-300 relative group
+                ${selectedId === cam.id ? "bg-surface-high border-primary-glow/50" : "bg-surface-low border-white/5 hover:border-white/20"}
+              `,
+              children: [
+                /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between items-start mb-2", children: [
+                  /* @__PURE__ */ jsxDEV("span", { className: `text-[10px] font-mono font-bold ${selectedId === cam.id ? "text-primary-glow" : "text-text-dim"}`, children: cam.id }, void 0, false, {
+                    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                    lineNumber: 128,
+                    columnNumber: 17
+                  }, this),
+                  /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-1", children: [
+                    /* @__PURE__ */ jsxDEV("span", { className: `w-1.5 h-1.5 rounded-full ${cam.status === "online" ? "bg-primary-glow" : cam.status === "alert" ? "bg-accent-error animate-pulse" : "bg-text-dim/30"}` }, void 0, false, {
+                      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                      lineNumber: 130,
+                      columnNumber: 19
+                    }, this),
+                    /* @__PURE__ */ jsxDEV("span", { className: "text-[8px] font-mono text-text-dim/60 uppercase", children: cam.status }, void 0, false, {
+                      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                      lineNumber: 131,
+                      columnNumber: 19
+                    }, this)
+                  ] }, void 0, true, {
+                    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                    lineNumber: 129,
+                    columnNumber: 17
+                  }, this)
+                ] }, void 0, true, {
+                  fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                  lineNumber: 127,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "text-xs font-headline font-bold text-white mb-1", children: cam.name }, void 0, false, {
+                  fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                  lineNumber: 134,
+                  columnNumber: 15
+                }, this),
+                /* @__PURE__ */ jsxDEV("div", { className: "text-[9px] font-mono text-text-dim/40 tracking-widest", children: [
+                  cam.total,
+                  " ALERTS // ",
+                  cam.critical,
+                  " CRITICAL"
+                ] }, void 0, true, {
+                  fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                  lineNumber: 135,
+                  columnNumber: 15
+                }, this),
+                selectedId === cam.id && /* @__PURE__ */ jsxDEV(motion.div, { layoutId: "active-indicator", className: "absolute left-0 top-0 bottom-0 w-1 bg-primary-glow shadow-[0_0_10px_#00ffaa]" }, void 0, false, {
+                  fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                  lineNumber: 137,
+                  columnNumber: 13
+                }, this)
+              ]
+            },
+            cam.id,
+            true,
+            {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 119,
+              columnNumber: 11
+            },
+            this
+          )
+        )
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+        lineNumber: 114,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+      lineNumber: 99,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "col-span-12 lg:col-span-9 flex flex-col gap-4", children: [
+      /* @__PURE__ */ jsxDEV("div", { className: "relative flex-1 bg-surface-lowest border border-white/5 overflow-hidden group min-h-[300px]", children: [
+        /* @__PURE__ */ jsxDEV(AnimatePresence, { mode: "wait", children: showLive ? /* @__PURE__ */ jsxDEV(
+          motion.img,
+          {
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            exit: { opacity: 0 },
+            src: liveSrc,
+            alt: `${selected.name} live`,
+            className: "w-full h-full object-cover",
+            onError: () => setStreamFailed(true)
+          },
+          "live-" + selected.id + "-" + streamNonce,
+          false,
+          {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 149,
+            columnNumber: 13
+          },
+          this
+        ) : selected?.thumbnail ? /* @__PURE__ */ jsxDEV(
+          motion.img,
+          {
+            initial: { opacity: 0 },
+            animate: { opacity: 1 },
+            exit: { opacity: 0 },
+            src: selected.thumbnail,
+            alt: selected.name,
+            className: "w-full h-full object-cover opacity-80 cursor-zoom-in",
+            onClick: () => selected.thumbnail && setLightbox(selected.thumbnail)
+          },
+          selected.id + selected.thumbnail,
+          false,
+          {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 160,
+            columnNumber: 13
+          },
+          this
+        ) : /* @__PURE__ */ jsxDEV("div", { className: "w-full h-full flex flex-col items-center justify-center gap-3 text-text-dim/30", children: [
+          /* @__PURE__ */ jsxDEV(ImageOff, { className: "w-10 h-10" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 172,
+            columnNumber: 17
+          }, this),
+          /* @__PURE__ */ jsxDEV("span", { className: "font-mono text-[10px] uppercase tracking-widest", children: liveMode && streamFailed ? "Live stream offline - no snapshot yet" : "No snapshot available" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 173,
+            columnNumber: 17
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 171,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 147,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "absolute inset-0 scanline opacity-20 pointer-events-none" }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 180,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-background/40 pointer-events-none" }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 181,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "absolute top-6 left-6 flex flex-col gap-2", children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-3", children: [
+            showLive ? /* @__PURE__ */ jsxDEV("div", { className: "bg-accent-error text-white px-3 py-1 font-headline font-black text-xs tracking-widest uppercase flex items-center gap-2", children: [
+              /* @__PURE__ */ jsxDEV("span", { className: "w-2 h-2 bg-white rounded-full animate-pulse" }, void 0, false, {
+                fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                lineNumber: 187,
+                columnNumber: 19
+              }, this),
+              "LIVE"
+            ] }, void 0, true, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 186,
+              columnNumber: 15
+            }, this) : /* @__PURE__ */ jsxDEV("div", { className: "bg-primary-glow text-surface-lowest px-3 py-1 font-headline font-black text-xs tracking-widest uppercase", children: "LATEST_SNAPSHOT" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 191,
+              columnNumber: 15
+            }, this),
+            /* @__PURE__ */ jsxDEV("div", { className: "bg-background/80 border border-white/10 px-3 py-1 font-mono text-xs text-white", children: selected ? `${selected.id} // ${selected.name}` : "-" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 193,
+              columnNumber: 15
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 184,
+            columnNumber: 13
+          }, this),
+          selected?.status === "alert" && /* @__PURE__ */ jsxDEV("div", { className: "flex items-center gap-2", children: [
+            /* @__PURE__ */ jsxDEV("span", { className: "w-2 h-2 bg-accent-error rounded-full animate-pulse" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 197,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { className: "font-mono text-[10px] text-accent-error tracking-widest uppercase", children: "Active_Threat" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 198,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 196,
+            columnNumber: 13
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 183,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "absolute top-6 right-6 flex gap-2", children: [
+          liveMode && /* @__PURE__ */ jsxDEV(
+            "button",
+            {
+              title: "Reconnect live stream",
+              onClick: () => {
+                setStreamFailed(false);
+                setStreamNonce((n) => n + 1);
+              },
+              className: "p-2 bg-background/60 hover:bg-primary-glow hover:text-surface-lowest transition-all border border-white/10",
+              children: /* @__PURE__ */ jsxDEV(RefreshCw, { className: "w-4 h-4" }, void 0, false, {
+                fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                lineNumber: 211,
+                columnNumber: 17
+              }, this)
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 206,
+              columnNumber: 13
+            },
+            this
+          ),
+          /* @__PURE__ */ jsxDEV(
+            "button",
+            {
+              title: liveMode ? "Switch to latest snapshot" : "Switch to live video",
+              onClick: () => {
+                setLiveMode((v) => !v);
+                setStreamFailed(false);
+                setStreamNonce((n) => n + 1);
+              },
+              className: `p-2 transition-all border border-white/10 ${liveMode ? "bg-accent-error/80 text-white" : "bg-background/60 hover:bg-primary-glow hover:text-surface-lowest"}`,
+              children: liveMode ? /* @__PURE__ */ jsxDEV(Video, { className: "w-4 h-4" }, void 0, false, {
+                fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                lineNumber: 220,
+                columnNumber: 27
+              }, this) : /* @__PURE__ */ jsxDEV(VideoOff, { className: "w-4 h-4" }, void 0, false, {
+                fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                lineNumber: 220,
+                columnNumber: 59
+              }, this)
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 215,
+              columnNumber: 13
+            },
+            this
+          ),
+          /* @__PURE__ */ jsxDEV(
+            "button",
+            {
+              title: showLive ? "Fullscreen live feed" : "Fullscreen snapshot",
+              onClick: () => {
+                const url = showLive ? liveSrc : selected?.thumbnail;
+                if (url) setLightbox(url);
+              },
+              className: "p-2 bg-background/60 hover:bg-primary-glow hover:text-surface-lowest transition-all border border-white/10",
+              children: /* @__PURE__ */ jsxDEV(Maximize2, { className: "w-4 h-4" }, void 0, false, {
+                fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+                lineNumber: 230,
+                columnNumber: 15
+              }, this)
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+              lineNumber: 222,
+              columnNumber: 13
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 203,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { className: "absolute bottom-6 left-6 right-6 flex justify-between items-end", children: /* @__PURE__ */ jsxDEV("div", { className: "font-mono text-lg text-white tracking-widest", children: [
+          selected?.lastSeen ? new Date(selected.lastSeen).toLocaleTimeString() : "--:--:--",
+          /* @__PURE__ */ jsxDEV("span", { className: "text-primary-glow/40 text-sm ml-2", children: "LAST" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 237,
+            columnNumber: 15
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 235,
+          columnNumber: 13
+        }, this) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 234,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+        lineNumber: 146,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "h-16 bg-surface-low border border-white/5 flex items-center px-6 gap-6 font-mono text-[10px] text-text-dim", children: [
+        /* @__PURE__ */ jsxDEV("span", { children: [
+          "NODE: ",
+          /* @__PURE__ */ jsxDEV("span", { className: "text-white", children: selected?.id ?? "-" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 243,
+            columnNumber: 23
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 243,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { children: [
+          "STATUS: ",
+          /* @__PURE__ */ jsxDEV("span", { className: selected?.status === "alert" ? "text-accent-error" : connected ? "text-primary-glow" : "text-text-dim", children: selected?.status ?? "-" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 244,
+            columnNumber: 25
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 244,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { children: [
+          "TOTAL: ",
+          /* @__PURE__ */ jsxDEV("span", { className: "text-white", children: selected?.total ?? 0 }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+            lineNumber: 245,
+            columnNumber: 24
+          }, this)
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 245,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("span", { className: "ml-auto text-text-dim/40", children: showLive ? "Live video stream connected" : liveMode && streamFailed ? "Live stream offline - check the pipeline (VITE_STREAM_URL). Showing snapshots." : "Snapshot mode - showing latest detection image" }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+          lineNumber: 246,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+        lineNumber: 242,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+      lineNumber: 145,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx",
+    lineNumber: 95,
+    columnNumber: 5
+  }, this);
+};
+_s(CamerasScreen, "WE42r65ny6aXZ05hvE9q4O6o9WU=", false, function() {
+  return [useAlerts];
+});
+_c = CamerasScreen;
+var _c;
+$RefreshReg$(_c, "CamerasScreen");
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+function $RefreshReg$(type, id) {
+  return RefreshRuntime.register(type, "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/CamerasScreen.tsx " + id);
+}
+function $RefreshSig$() {
+  return RefreshRuntime.createSignatureFunctionForTransform();
+}
+
+//# sourceMappingURL=data:application/json;base64,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QUFBQTtBQUFBO0FBQUEsYUE4RkE7QUFBQSxNQUVBLHVCQUFDLFNBQUksV0FBVSw4R0FDYjtBQUFBLCtCQUFDLFVBQUs7QUFBQTtBQUFBLFVBQU0sdUJBQUMsVUFBSyxXQUFVLGNBQWNWLG9CQUFVM0IsTUFBTSxPQUE5QztBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFrRDtBQUFBLGFBQTlEO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBcUU7QUFBQSxRQUNyRSx1QkFBQyxVQUFLO0FBQUE7QUFBQSxVQUFRLHVCQUFDLFVBQUssV0FBVzJCLFVBQVVaLFdBQVcsVUFBVSxzQkFBc0IzQyxZQUFZLHNCQUFzQixpQkFBa0J1RCxvQkFBVVosVUFBVSxPQUE5STtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFrSjtBQUFBLGFBQWhLO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBdUs7QUFBQSxRQUN2Syx1QkFBQyxVQUFLO0FBQUE7QUFBQSxVQUFPLHVCQUFDLFVBQUssV0FBVSxjQUFjWSxvQkFBVVYsU0FBUyxLQUFqRDtBQUFBO0FBQUE7QUFBQTtBQUFBLGlCQUFtRDtBQUFBLGFBQWhFO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFBdUU7QUFBQSxRQUN2RSx1QkFBQyxVQUFLLFdBQVUsNEJBQ2JZLHFCQUNHLGdDQUNBbEQsWUFBWUUsZUFDVixtRkFDQSxvREFMUjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBTUE7QUFBQSxXQVZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUFXQTtBQUFBLFNBNUdGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0E2R0E7QUFBQSxPQS9KRjtBQUFBO0FBQUE7QUFBQTtBQUFBLFNBZ0tBO0FBRUo7QUFBRVgsR0EvTldELGVBQWE7QUFBQSxVQUNNSCxTQUFTO0FBQUE7QUFBQSxLQUQ1Qkc7QUFBYSxJQUFBcUU7QUFBQSxhQUFBQSxJQUFBIiwibmFtZXMiOlsidXNlTWVtbyIsInVzZVN0YXRlIiwidXNlRWZmZWN0IiwibW90aW9uIiwiQW5pbWF0ZVByZXNlbmNlIiwiU2VhcmNoIiwiRmlsdGVyIiwiTWF4aW1pemUyIiwiQWN0aXZpdHkiLCJJbWFnZU9mZiIsIlZpZGVvIiwiVmlkZW9PZmYiLCJSZWZyZXNoQ3ciLCJUYWN0aWNhbElucHV0IiwiVGFjdGljYWxCdXR0b24iLCJJbWFnZUxpZ2h0Ym94IiwidXNlQWxlcnRzIiwic3RyZWFtVXJsIiwiUkVDRU5UX01TIiwiQ2FtZXJhc1NjcmVlbiIsIl9zIiwiYWxlcnRzIiwiY29ubmVjdGVkIiwic2VhcmNoUXVlcnkiLCJzZXRTZWFyY2hRdWVyeSIsInNlbGVjdGVkSWQiLCJzZXRTZWxlY3RlZElkIiwibGlnaHRib3giLCJzZXRMaWdodGJveCIsImxpdmVNb2RlIiwic2V0TGl2ZU1vZGUiLCJzdHJlYW1GYWlsZWQiLCJzZXRTdHJlYW1GYWlsZWQiLCJzdHJlYW1Ob25jZSIsInNldFN0cmVhbU5vbmNlIiwiY2FtZXJhcyIsImJ5Q2FtIiwiTWFwIiwiYSIsImhhcyIsImNhbWVyYUlkIiwic2V0IiwiZ2V0IiwicHVzaCIsIm5vdyIsIkRhdGUiLCJBcnJheSIsImZyb20iLCJlbnRyaWVzIiwibWFwIiwiaWQiLCJsaXN0Iiwic29ydGVkIiwic29ydCIsImIiLCJ0aW1lc3RhbXAiLCJsYXRlc3QiLCJyZWNlbnRDcml0aWNhbCIsInNvbWUiLCJzZXZlcml0eSIsIndpdGhJbWFnZSIsImZpbmQiLCJpbWFnZVVybCIsIm5hbWUiLCJsb2NhdGlvbiIsInN0YXR1cyIsInRodW1ibmFpbCIsInRvdGFsIiwibGVuZ3RoIiwiY3JpdGljYWwiLCJmaWx0ZXIiLCJsYXN0U2VlbiIsIm4iLCJmaWx0ZXJlZCIsImNhbSIsInRvTG93ZXJDYXNlIiwiaW5jbHVkZXMiLCJzZWxlY3RlZCIsImMiLCJzaG93TGl2ZSIsImxpdmVTcmMiLCJlIiwidGFyZ2V0IiwidmFsdWUiLCJvcGFjaXR5IiwidiIsInVybCIsInRvTG9jYWxlVGltZVN0cmluZyIsIl9jIl0sImlnbm9yZUxpc3QiOltdLCJzb3VyY2VzIjpbIkNhbWVyYXNTY3JlZW4udHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZU1lbW8sIHVzZVN0YXRlLCB1c2VFZmZlY3QgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBtb3Rpb24sIEFuaW1hdGVQcmVzZW5jZSB9IGZyb20gJ21vdGlvbi9yZWFjdCc7XG5pbXBvcnQge1xuICBTZWFyY2gsXG4gIEZpbHRlcixcbiAgTWF4aW1pemUyLFxuICBBY3Rpdml0eSxcbiAgSW1hZ2VPZmYsXG4gIFZpZGVvLFxuICBWaWRlb09mZixcbiAgUmVmcmVzaEN3XG59IGZyb20gJ2x1Y2lkZS1yZWFjdCc7XG5pbXBvcnQgeyBUYWN0aWNhbElucHV0LCBUYWN0aWNhbEJ1dHRvbiB9IGZyb20gJy4vVGFjdGljYWxDb21wb25lbnRzJztcbmltcG9ydCB7IEltYWdlTGlnaHRib3ggfSBmcm9tICcuL0ltYWdlTGlnaHRib3gnO1xuaW1wb3J0IHsgdXNlQWxlcnRzIH0gZnJvbSAnLi4vdXNlQWxlcnRzJztcbmltcG9ydCB7IHN0cmVhbVVybCB9IGZyb20gJy4uL2FwaSc7XG5pbXBvcnQgeyBBbGVydCB9IGZyb20gJy4uL3R5cGVzJztcblxudHlwZSBDYW1TdGF0dXMgPSAnb25saW5lJyB8ICdvZmZsaW5lJyB8ICdhbGVydCc7XG5cbmludGVyZmFjZSBEZXJpdmVkQ2FtZXJhIHtcbiAgaWQ6IHN0cmluZztcbiAgbmFtZTogc3RyaW5nO1xuICBzdGF0dXM6IENhbVN0YXR1cztcbiAgdGh1bWJuYWlsOiBzdHJpbmcgfCBudWxsO1xuICB0b3RhbDogbnVtYmVyO1xuICBjcml0aWNhbDogbnVtYmVyO1xuICBsYXN0U2Vlbjogc3RyaW5nIHwgbnVsbDtcbiAgbGF0ZXN0PzogQWxlcnQ7XG59XG5cbmNvbnN0IFJFQ0VOVF9NUyA9IDUgKiA2MCAqIDEwMDA7IC8vIGEgY2FtZXJhIGlzIFwiYWxlcnRcIiBpZiBpdCBoYWQgYSBjcml0aWNhbCBhbGVydCBpbiB0aGUgbGFzdCA1IG1pblxuXG5leHBvcnQgY29uc3QgQ2FtZXJhc1NjcmVlbiA9ICgpID0+IHtcbiAgY29uc3QgeyBhbGVydHMsIGNvbm5lY3RlZCB9ID0gdXNlQWxlcnRzKCk7XG4gIGNvbnN0IFtzZWFyY2hRdWVyeSwgc2V0U2VhcmNoUXVlcnldID0gdXNlU3RhdGUoJycpO1xuICBjb25zdCBbc2VsZWN0ZWRJZCwgc2V0U2VsZWN0ZWRJZF0gPSB1c2VTdGF0ZTxzdHJpbmcgfCBudWxsPihudWxsKTtcbiAgY29uc3QgW2xpZ2h0Ym94LCBzZXRMaWdodGJveF0gPSB1c2VTdGF0ZTxzdHJpbmcgfCBudWxsPihudWxsKTtcbiAgY29uc3QgW2xpdmVNb2RlLCBzZXRMaXZlTW9kZV0gPSB1c2VTdGF0ZSh0cnVlKTsgICAvLyBwcmVmZXIgbGl2ZSB2aWRlbyBvdmVyIHNuYXBzaG90XG4gIGNvbnN0IFtzdHJlYW1GYWlsZWQsIHNldFN0cmVhbUZhaWxlZF0gPSB1c2VTdGF0ZShmYWxzZSk7IC8vIGRldmljZSBzdHJlYW0gdW5yZWFjaGFibGVcbiAgY29uc3QgW3N0cmVhbU5vbmNlLCBzZXRTdHJlYW1Ob25jZV0gPSB1c2VTdGF0ZSgwKTsgLy8gYnVtcCB0byBmb3JjZSB0aGUgPGltZz4gdG8gcmVjb25uZWN0XG5cbiAgLy8gQnVpbGQgYSBjYW1lcmEgbGlzdCBmcm9tIHRoZSBhbGVydHMgd2UndmUgcmVjZWl2ZWQuXG4gIGNvbnN0IGNhbWVyYXMgPSB1c2VNZW1vPERlcml2ZWRDYW1lcmFbXT4oKCkgPT4ge1xuICAgIGNvbnN0IGJ5Q2FtID0gbmV3IE1hcDxzdHJpbmcsIEFsZXJ0W10+KCk7XG4gICAgZm9yIChjb25zdCBhIG9mIGFsZXJ0cykge1xuICAgICAgaWYgKCFieUNhbS5oYXMoYS5jYW1lcmFJZCkpIGJ5Q2FtLnNldChhLmNhbWVyYUlkLCBbXSk7XG4gICAgICBieUNhbS5nZXQoYS5jYW1lcmFJZCkhLnB1c2goYSk7XG4gICAgfVxuICAgIGNvbnN0IG5vdyA9IERhdGUubm93KCk7XG4gICAgcmV0dXJuIEFycmF5LmZyb20oYnlDYW0uZW50cmllcygpKS5tYXAoKFtpZCwgbGlzdF0pID0+IHtcbiAgICAgIGNvbnN0IHNvcnRlZCA9IFsuLi5saXN0XS5zb3J0KChhLCBiKSA9PiArbmV3IERhdGUoYi50aW1lc3RhbXApIC0gK25ldyBEYXRlKGEudGltZXN0YW1wKSk7XG4gICAgICBjb25zdCBsYXRlc3QgPSBzb3J0ZWRbMF07XG4gICAgICBjb25zdCByZWNlbnRDcml0aWNhbCA9IHNvcnRlZC5zb21lKFxuICAgICAgICAoYSkgPT4gYS5zZXZlcml0eSA9PT0gJ2NyaXRpY2FsJyAmJiBub3cgLSArbmV3IERhdGUoYS50aW1lc3RhbXApIDwgUkVDRU5UX01TXG4gICAgICApO1xuICAgICAgY29uc3Qgd2l0aEltYWdlID0gc29ydGVkLmZpbmQoKGEpID0+IGEuaW1hZ2VVcmwpO1xuICAgICAgcmV0dXJuIHtcbiAgICAgICAgaWQsXG4gICAgICAgIG5hbWU6IGxhdGVzdD8ubG9jYXRpb24gfHwgaWQsXG4gICAgICAgIHN0YXR1czogcmVjZW50Q3JpdGljYWwgPyAnYWxlcnQnIDogY29ubmVjdGVkID8gJ29ubGluZScgOiAnb2ZmbGluZScsXG4gICAgICAgIHRodW1ibmFpbDogd2l0aEltYWdlPy5pbWFnZVVybCA/PyBudWxsLFxuICAgICAgICB0b3RhbDogbGlzdC5sZW5ndGgsXG4gICAgICAgIGNyaXRpY2FsOiBsaXN0LmZpbHRlcigoYSkgPT4gYS5zZXZlcml0eSA9PT0gJ2NyaXRpY2FsJykubGVuZ3RoLFxuICAgICAgICBsYXN0U2VlbjogbGF0ZXN0Py50aW1lc3RhbXAgPz8gbnVsbCxcbiAgICAgICAgbGF0ZXN0XG4gICAgICB9O1xuICAgIH0pO1xuICB9LCBbYWxlcnRzLCBjb25uZWN0ZWRdKTtcblxuICAvLyBBdXRvLXNlbGVjdCB0aGUgZmlyc3QgY2FtZXJhIG9uY2UgZGF0YSBhcnJpdmVzLlxuICB1c2VFZmZlY3QoKCkgPT4ge1xuICAgIGlmICghc2VsZWN0ZWRJZCAmJiBjYW1lcmFzLmxlbmd0aCkgc2V0U2VsZWN0ZWRJZChjYW1lcmFzWzBdLmlkKTtcbiAgfSwgW2NhbWVyYXMsIHNlbGVjdGVkSWRdKTtcblxuICAvLyBXaGVuIHRoZSBzZWxlY3RlZCBjYW1lcmEgY2hhbmdlcywgcmV0cnkgdGhlIGxpdmUgc3RyZWFtIGZyb20gc2NyYXRjaC5cbiAgdXNlRWZmZWN0KCgpID0+IHtcbiAgICBzZXRTdHJlYW1GYWlsZWQoZmFsc2UpO1xuICAgIHNldFN0cmVhbU5vbmNlKChuKSA9PiBuICsgMSk7XG4gIH0sIFtzZWxlY3RlZElkXSk7XG5cbiAgY29uc3QgZmlsdGVyZWQgPSBjYW1lcmFzLmZpbHRlcihcbiAgICAoY2FtKSA9PlxuICAgICAgY2FtLm5hbWUudG9Mb3dlckNhc2UoKS5pbmNsdWRlcyhzZWFyY2hRdWVyeS50b0xvd2VyQ2FzZSgpKSB8fFxuICAgICAgY2FtLmlkLnRvTG93ZXJDYXNlKCkuaW5jbHVkZXMoc2VhcmNoUXVlcnkudG9Mb3dlckNhc2UoKSlcbiAgKTtcblxuICBjb25zdCBzZWxlY3RlZCA9IGNhbWVyYXMuZmluZCgoYykgPT4gYy5pZCA9PT0gc2VsZWN0ZWRJZCkgfHwgbnVsbDtcblxuICAvLyBTaG93IHRoZSBsaXZlIE1KUEVHIGZlZWQgd2hlbiB0aGUgb3BlcmF0b3Igd2FudHMgaXQgYW5kIHRoZSBkZXZpY2Ugc3RyZWFtIGlzIHJlYWNoYWJsZS5cbiAgY29uc3Qgc2hvd0xpdmUgPSAhIXNlbGVjdGVkICYmIGxpdmVNb2RlICYmICFzdHJlYW1GYWlsZWQ7XG4gIGNvbnN0IGxpdmVTcmMgPSBzZWxlY3RlZCA/IGAke3N0cmVhbVVybChzZWxlY3RlZC5pZCl9Jm49JHtzdHJlYW1Ob25jZX1gIDogJyc7XG5cbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ3JpZC1jb2xzLTEyIGdhcC02IGgtZnVsbFwiPlxuICAgICAgPEltYWdlTGlnaHRib3ggdXJsPXtsaWdodGJveH0gdGl0bGU9e3NlbGVjdGVkPy5pZH0gc3VidGl0bGU9e3NlbGVjdGVkPy5uYW1lfSBvbkNsb3NlPXsoKSA9PiBzZXRMaWdodGJveChudWxsKX0gLz5cblxuICAgICAgey8qIExlZnQ6IENhbWVyYSBMaXN0ICovfVxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJjb2wtc3Bhbi0xMiBsZzpjb2wtc3Bhbi0zIGZsZXggZmxleC1jb2wgZ2FwLTRcIj5cbiAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTRcIj5cbiAgICAgICAgICA8VGFjdGljYWxJbnB1dCBwbGFjZWhvbGRlcj1cIlNlYXJjaCBub2Rlcy4uLlwiIGljb249e1NlYXJjaH0gdmFsdWU9e3NlYXJjaFF1ZXJ5fSBvbkNoYW5nZT17KGU6IGFueSkgPT4gc2V0U2VhcmNoUXVlcnkoZS50YXJnZXQudmFsdWUpfSAvPlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBnYXAtMlwiPlxuICAgICAgICAgICAgPFRhY3RpY2FsQnV0dG9uIHZhcmlhbnQ9XCJnaG9zdFwiIGNsYXNzTmFtZT1cImZsZXgtMSB0ZXh0LVsxMHB4XSBweS0yXCI+XG4gICAgICAgICAgICAgIDxGaWx0ZXIgY2xhc3NOYW1lPVwidy0zIGgtMyBtci0yXCIgLz5cbiAgICAgICAgICAgICAgRmlsdGVyXG4gICAgICAgICAgICA8L1RhY3RpY2FsQnV0dG9uPlxuICAgICAgICAgICAgPFRhY3RpY2FsQnV0dG9uIHZhcmlhbnQ9XCJnaG9zdFwiIGNsYXNzTmFtZT1cImZsZXgtMSB0ZXh0LVsxMHB4XSBweS0yXCI+XG4gICAgICAgICAgICAgIDxBY3Rpdml0eSBjbGFzc05hbWU9XCJ3LTMgaC0zIG1yLTJcIiAvPlxuICAgICAgICAgICAgICBTdGF0dXNcbiAgICAgICAgICAgIDwvVGFjdGljYWxCdXR0b24+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgIDwvZGl2PlxuXG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleC0xIG92ZXJmbG93LXktYXV0byBzcGFjZS15LTIgY3VzdG9tLXNjcm9sbGJhciBwci0yXCI+XG4gICAgICAgICAge2ZpbHRlcmVkLmxlbmd0aCA9PT0gMCAmJiAoXG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cInRleHQtWzEwcHhdIGZvbnQtbW9ubyB0ZXh0LXRleHQtZGltLzUwIHVwcGVyY2FzZSBwLTNcIj5ObyBjYW1lcmFzIGhhdmUgcmVwb3J0ZWQgeWV0LjwvZGl2PlxuICAgICAgICAgICl9XG4gICAgICAgICAge2ZpbHRlcmVkLm1hcCgoY2FtKSA9PiAoXG4gICAgICAgICAgICA8YnV0dG9uXG4gICAgICAgICAgICAgIGtleT17Y2FtLmlkfVxuICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRTZWxlY3RlZElkKGNhbS5pZCl9XG4gICAgICAgICAgICAgIGNsYXNzTmFtZT17YFxuICAgICAgICAgICAgICAgIHctZnVsbCB0ZXh0LWxlZnQgcC0zIGJvcmRlciB0cmFuc2l0aW9uLWFsbCBkdXJhdGlvbi0zMDAgcmVsYXRpdmUgZ3JvdXBcbiAgICAgICAgICAgICAgICAke3NlbGVjdGVkSWQgPT09IGNhbS5pZCA/ICdiZy1zdXJmYWNlLWhpZ2ggYm9yZGVyLXByaW1hcnktZ2xvdy81MCcgOiAnYmctc3VyZmFjZS1sb3cgYm9yZGVyLXdoaXRlLzUgaG92ZXI6Ym9yZGVyLXdoaXRlLzIwJ31cbiAgICAgICAgICAgICAgYH1cbiAgICAgICAgICAgID5cbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGp1c3RpZnktYmV0d2VlbiBpdGVtcy1zdGFydCBtYi0yXCI+XG4gICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPXtgdGV4dC1bMTBweF0gZm9udC1tb25vIGZvbnQtYm9sZCAke3NlbGVjdGVkSWQgPT09IGNhbS5pZCA/ICd0ZXh0LXByaW1hcnktZ2xvdycgOiAndGV4dC10ZXh0LWRpbSd9YH0+e2NhbS5pZH08L3NwYW4+XG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMVwiPlxuICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPXtgdy0xLjUgaC0xLjUgcm91bmRlZC1mdWxsICR7Y2FtLnN0YXR1cyA9PT0gJ29ubGluZScgPyAnYmctcHJpbWFyeS1nbG93JyA6IGNhbS5zdGF0dXMgPT09ICdhbGVydCcgPyAnYmctYWNjZW50LWVycm9yIGFuaW1hdGUtcHVsc2UnIDogJ2JnLXRleHQtZGltLzMwJ31gfT48L3NwYW4+XG4gICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LVs4cHhdIGZvbnQtbW9ubyB0ZXh0LXRleHQtZGltLzYwIHVwcGVyY2FzZVwiPntjYW0uc3RhdHVzfTwvc3Bhbj5cbiAgICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC14cyBmb250LWhlYWRsaW5lIGZvbnQtYm9sZCB0ZXh0LXdoaXRlIG1iLTFcIj57Y2FtLm5hbWV9PC9kaXY+XG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwidGV4dC1bOXB4XSBmb250LW1vbm8gdGV4dC10ZXh0LWRpbS80MCB0cmFja2luZy13aWRlc3RcIj57Y2FtLnRvdGFsfSBBTEVSVFMgLy8ge2NhbS5jcml0aWNhbH0gQ1JJVElDQUw8L2Rpdj5cbiAgICAgICAgICAgICAge3NlbGVjdGVkSWQgPT09IGNhbS5pZCAmJiAoXG4gICAgICAgICAgICAgICAgPG1vdGlvbi5kaXYgbGF5b3V0SWQ9XCJhY3RpdmUtaW5kaWNhdG9yXCIgY2xhc3NOYW1lPVwiYWJzb2x1dGUgbGVmdC0wIHRvcC0wIGJvdHRvbS0wIHctMSBiZy1wcmltYXJ5LWdsb3cgc2hhZG93LVswXzBfMTBweF8jMDBmZmFhXVwiIC8+XG4gICAgICAgICAgICAgICl9XG4gICAgICAgICAgICA8L2J1dHRvbj5cbiAgICAgICAgICApKX1cbiAgICAgICAgPC9kaXY+XG4gICAgICA8L2Rpdj5cblxuICAgICAgey8qIENlbnRlcjogTWFpbiBWaWV3cG9ydCAobGl2ZSBmZWVkIC8gbGF0ZXN0IHNuYXBzaG90KSAqL31cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiY29sLXNwYW4tMTIgbGc6Y29sLXNwYW4tOSBmbGV4IGZsZXgtY29sIGdhcC00XCI+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwicmVsYXRpdmUgZmxleC0xIGJnLXN1cmZhY2UtbG93ZXN0IGJvcmRlciBib3JkZXItd2hpdGUvNSBvdmVyZmxvdy1oaWRkZW4gZ3JvdXAgbWluLWgtWzMwMHB4XVwiPlxuICAgICAgICAgIDxBbmltYXRlUHJlc2VuY2UgbW9kZT1cIndhaXRcIj5cbiAgICAgICAgICAgIHtzaG93TGl2ZSA/IChcbiAgICAgICAgICAgICAgPG1vdGlvbi5pbWdcbiAgICAgICAgICAgICAgICBrZXk9eydsaXZlLScgKyBzZWxlY3RlZCEuaWQgKyAnLScgKyBzdHJlYW1Ob25jZX1cbiAgICAgICAgICAgICAgICBpbml0aWFsPXt7IG9wYWNpdHk6IDAgfX1cbiAgICAgICAgICAgICAgICBhbmltYXRlPXt7IG9wYWNpdHk6IDEgfX1cbiAgICAgICAgICAgICAgICBleGl0PXt7IG9wYWNpdHk6IDAgfX1cbiAgICAgICAgICAgICAgICBzcmM9e2xpdmVTcmN9XG4gICAgICAgICAgICAgICAgYWx0PXtgJHtzZWxlY3RlZCEubmFtZX0gbGl2ZWB9XG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGgtZnVsbCBvYmplY3QtY292ZXJcIlxuICAgICAgICAgICAgICAgIG9uRXJyb3I9eygpID0+IHNldFN0cmVhbUZhaWxlZCh0cnVlKX1cbiAgICAgICAgICAgICAgLz5cbiAgICAgICAgICAgICkgOiBzZWxlY3RlZD8udGh1bWJuYWlsID8gKFxuICAgICAgICAgICAgICA8bW90aW9uLmltZ1xuICAgICAgICAgICAgICAgIGtleT17c2VsZWN0ZWQuaWQgKyBzZWxlY3RlZC50aHVtYm5haWx9XG4gICAgICAgICAgICAgICAgaW5pdGlhbD17eyBvcGFjaXR5OiAwIH19XG4gICAgICAgICAgICAgICAgYW5pbWF0ZT17eyBvcGFjaXR5OiAxIH19XG4gICAgICAgICAgICAgICAgZXhpdD17eyBvcGFjaXR5OiAwIH19XG4gICAgICAgICAgICAgICAgc3JjPXtzZWxlY3RlZC50aHVtYm5haWx9XG4gICAgICAgICAgICAgICAgYWx0PXtzZWxlY3RlZC5uYW1lfVxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctZnVsbCBoLWZ1bGwgb2JqZWN0LWNvdmVyIG9wYWNpdHktODAgY3Vyc29yLXpvb20taW5cIlxuICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHNlbGVjdGVkLnRodW1ibmFpbCAmJiBzZXRMaWdodGJveChzZWxlY3RlZC50aHVtYm5haWwpfVxuICAgICAgICAgICAgICAvPlxuICAgICAgICAgICAgKSA6IChcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJ3LWZ1bGwgaC1mdWxsIGZsZXggZmxleC1jb2wgaXRlbXMtY2VudGVyIGp1c3RpZnktY2VudGVyIGdhcC0zIHRleHQtdGV4dC1kaW0vMzBcIj5cbiAgICAgICAgICAgICAgICA8SW1hZ2VPZmYgY2xhc3NOYW1lPVwidy0xMCBoLTEwXCIgLz5cbiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJmb250LW1vbm8gdGV4dC1bMTBweF0gdXBwZXJjYXNlIHRyYWNraW5nLXdpZGVzdFwiPlxuICAgICAgICAgICAgICAgICAge2xpdmVNb2RlICYmIHN0cmVhbUZhaWxlZCA/ICdMaXZlIHN0cmVhbSBvZmZsaW5lIC0gbm8gc25hcHNob3QgeWV0JyA6ICdObyBzbmFwc2hvdCBhdmFpbGFibGUnfVxuICAgICAgICAgICAgICAgIDwvc3Bhbj5cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICApfVxuICAgICAgICAgIDwvQW5pbWF0ZVByZXNlbmNlPlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSBpbnNldC0wIHNjYW5saW5lIG9wYWNpdHktMjAgcG9pbnRlci1ldmVudHMtbm9uZVwiPjwvZGl2PlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYWJzb2x1dGUgaW5zZXQtMCBiZy1ncmFkaWVudC10by10IGZyb20tYmFja2dyb3VuZC84MCB2aWEtdHJhbnNwYXJlbnQgdG8tYmFja2dyb3VuZC80MCBwb2ludGVyLWV2ZW50cy1ub25lXCI+PC9kaXY+XG5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIHRvcC02IGxlZnQtNiBmbGV4IGZsZXgtY29sIGdhcC0yXCI+XG4gICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXggaXRlbXMtY2VudGVyIGdhcC0zXCI+XG4gICAgICAgICAgICAgIHtzaG93TGl2ZSA/IChcbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImJnLWFjY2VudC1lcnJvciB0ZXh0LXdoaXRlIHB4LTMgcHktMSBmb250LWhlYWRsaW5lIGZvbnQtYmxhY2sgdGV4dC14cyB0cmFja2luZy13aWRlc3QgdXBwZXJjYXNlIGZsZXggaXRlbXMtY2VudGVyIGdhcC0yXCI+XG4gICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ3LTIgaC0yIGJnLXdoaXRlIHJvdW5kZWQtZnVsbCBhbmltYXRlLXB1bHNlXCI+PC9zcGFuPlxuICAgICAgICAgICAgICAgICAgTElWRVxuICAgICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICApIDogKFxuICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYmctcHJpbWFyeS1nbG93IHRleHQtc3VyZmFjZS1sb3dlc3QgcHgtMyBweS0xIGZvbnQtaGVhZGxpbmUgZm9udC1ibGFjayB0ZXh0LXhzIHRyYWNraW5nLXdpZGVzdCB1cHBlcmNhc2VcIj5MQVRFU1RfU05BUFNIT1Q8L2Rpdj5cbiAgICAgICAgICAgICAgKX1cbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJiZy1iYWNrZ3JvdW5kLzgwIGJvcmRlciBib3JkZXItd2hpdGUvMTAgcHgtMyBweS0xIGZvbnQtbW9ubyB0ZXh0LXhzIHRleHQtd2hpdGVcIj57c2VsZWN0ZWQgPyBgJHtzZWxlY3RlZC5pZH0gLy8gJHtzZWxlY3RlZC5uYW1lfWAgOiAnLSd9PC9kaXY+XG4gICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgIHtzZWxlY3RlZD8uc3RhdHVzID09PSAnYWxlcnQnICYmIChcbiAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMlwiPlxuICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInctMiBoLTIgYmctYWNjZW50LWVycm9yIHJvdW5kZWQtZnVsbCBhbmltYXRlLXB1bHNlXCI+PC9zcGFuPlxuICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cImZvbnQtbW9ubyB0ZXh0LVsxMHB4XSB0ZXh0LWFjY2VudC1lcnJvciB0cmFja2luZy13aWRlc3QgdXBwZXJjYXNlXCI+QWN0aXZlX1RocmVhdDwvc3Bhbj5cbiAgICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICApfVxuICAgICAgICAgIDwvZGl2PlxuXG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJhYnNvbHV0ZSB0b3AtNiByaWdodC02IGZsZXggZ2FwLTJcIj5cbiAgICAgICAgICAgIHsvKiBSZWNvbm5lY3QgLSBvbmx5IHVzZWZ1bCB3aGlsZSBhdHRlbXB0aW5nIGEgbGl2ZSBmZWVkICovfVxuICAgICAgICAgICAge2xpdmVNb2RlICYmIChcbiAgICAgICAgICAgICAgPGJ1dHRvblxuICAgICAgICAgICAgICAgIHRpdGxlPVwiUmVjb25uZWN0IGxpdmUgc3RyZWFtXCJcbiAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB7IHNldFN0cmVhbUZhaWxlZChmYWxzZSk7IHNldFN0cmVhbU5vbmNlKChuKSA9PiBuICsgMSk7IH19XG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwicC0yIGJnLWJhY2tncm91bmQvNjAgaG92ZXI6YmctcHJpbWFyeS1nbG93IGhvdmVyOnRleHQtc3VyZmFjZS1sb3dlc3QgdHJhbnNpdGlvbi1hbGwgYm9yZGVyIGJvcmRlci13aGl0ZS8xMFwiXG4gICAgICAgICAgICAgID5cbiAgICAgICAgICAgICAgICA8UmVmcmVzaEN3IGNsYXNzTmFtZT1cInctNCBoLTRcIiAvPlxuICAgICAgICAgICAgICA8L2J1dHRvbj5cbiAgICAgICAgICAgICl9XG4gICAgICAgICAgICB7LyogVG9nZ2xlIGJldHdlZW4gbGl2ZSB2aWRlbyBhbmQgbGF0ZXN0IHNuYXBzaG90ICovfVxuICAgICAgICAgICAgPGJ1dHRvblxuICAgICAgICAgICAgICB0aXRsZT17bGl2ZU1vZGUgPyAnU3dpdGNoIHRvIGxhdGVzdCBzbmFwc2hvdCcgOiAnU3dpdGNoIHRvIGxpdmUgdmlkZW8nfVxuICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB7IHNldExpdmVNb2RlKCh2KSA9PiAhdik7IHNldFN0cmVhbUZhaWxlZChmYWxzZSk7IHNldFN0cmVhbU5vbmNlKChuKSA9PiBuICsgMSk7IH19XG4gICAgICAgICAgICAgIGNsYXNzTmFtZT17YHAtMiB0cmFuc2l0aW9uLWFsbCBib3JkZXIgYm9yZGVyLXdoaXRlLzEwICR7bGl2ZU1vZGUgPyAnYmctYWNjZW50LWVycm9yLzgwIHRleHQtd2hpdGUnIDogJ2JnLWJhY2tncm91bmQvNjAgaG92ZXI6YmctcHJpbWFyeS1nbG93IGhvdmVyOnRleHQtc3VyZmFjZS1sb3dlc3QnfWB9XG4gICAgICAgICAgICA+XG4gICAgICAgICAgICAgIHtsaXZlTW9kZSA/IDxWaWRlbyBjbGFzc05hbWU9XCJ3LTQgaC00XCIgLz4gOiA8VmlkZW9PZmYgY2xhc3NOYW1lPVwidy00IGgtNFwiIC8+fVxuICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgICA8YnV0dG9uXG4gICAgICAgICAgICAgIHRpdGxlPXtzaG93TGl2ZSA/ICdGdWxsc2NyZWVuIGxpdmUgZmVlZCcgOiAnRnVsbHNjcmVlbiBzbmFwc2hvdCd9XG4gICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHtcbiAgICAgICAgICAgICAgICBjb25zdCB1cmwgPSBzaG93TGl2ZSA/IGxpdmVTcmMgOiBzZWxlY3RlZD8udGh1bWJuYWlsO1xuICAgICAgICAgICAgICAgIGlmICh1cmwpIHNldExpZ2h0Ym94KHVybCk7XG4gICAgICAgICAgICAgIH19XG4gICAgICAgICAgICAgIGNsYXNzTmFtZT1cInAtMiBiZy1iYWNrZ3JvdW5kLzYwIGhvdmVyOmJnLXByaW1hcnktZ2xvdyBob3Zlcjp0ZXh0LXN1cmZhY2UtbG93ZXN0IHRyYW5zaXRpb24tYWxsIGJvcmRlciBib3JkZXItd2hpdGUvMTBcIlxuICAgICAgICAgICAgPlxuICAgICAgICAgICAgICA8TWF4aW1pemUyIGNsYXNzTmFtZT1cInctNCBoLTRcIiAvPlxuICAgICAgICAgICAgPC9idXR0b24+XG4gICAgICAgICAgPC9kaXY+XG5cbiAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImFic29sdXRlIGJvdHRvbS02IGxlZnQtNiByaWdodC02IGZsZXgganVzdGlmeS1iZXR3ZWVuIGl0ZW1zLWVuZFwiPlxuICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJmb250LW1vbm8gdGV4dC1sZyB0ZXh0LXdoaXRlIHRyYWNraW5nLXdpZGVzdFwiPlxuICAgICAgICAgICAgICB7c2VsZWN0ZWQ/Lmxhc3RTZWVuID8gbmV3IERhdGUoc2VsZWN0ZWQubGFzdFNlZW4pLnRvTG9jYWxlVGltZVN0cmluZygpIDogJy0tOi0tOi0tJ31cbiAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC1wcmltYXJ5LWdsb3cvNDAgdGV4dC1zbSBtbC0yXCI+TEFTVDwvc3Bhbj5cbiAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L2Rpdj5cblxuICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImgtMTYgYmctc3VyZmFjZS1sb3cgYm9yZGVyIGJvcmRlci13aGl0ZS81IGZsZXggaXRlbXMtY2VudGVyIHB4LTYgZ2FwLTYgZm9udC1tb25vIHRleHQtWzEwcHhdIHRleHQtdGV4dC1kaW1cIj5cbiAgICAgICAgICA8c3Bhbj5OT0RFOiA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXdoaXRlXCI+e3NlbGVjdGVkPy5pZCA/PyAnLSd9PC9zcGFuPjwvc3Bhbj5cbiAgICAgICAgICA8c3Bhbj5TVEFUVVM6IDxzcGFuIGNsYXNzTmFtZT17c2VsZWN0ZWQ/LnN0YXR1cyA9PT0gJ2FsZXJ0JyA/ICd0ZXh0LWFjY2VudC1lcnJvcicgOiBjb25uZWN0ZWQgPyAndGV4dC1wcmltYXJ5LWdsb3cnIDogJ3RleHQtdGV4dC1kaW0nfT57c2VsZWN0ZWQ/LnN0YXR1cyA/PyAnLSd9PC9zcGFuPjwvc3Bhbj5cbiAgICAgICAgICA8c3Bhbj5UT1RBTDogPHNwYW4gY2xhc3NOYW1lPVwidGV4dC13aGl0ZVwiPntzZWxlY3RlZD8udG90YWwgPz8gMH08L3NwYW4+PC9zcGFuPlxuICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cIm1sLWF1dG8gdGV4dC10ZXh0LWRpbS80MFwiPlxuICAgICAgICAgICAge3Nob3dMaXZlXG4gICAgICAgICAgICAgID8gJ0xpdmUgdmlkZW8gc3RyZWFtIGNvbm5lY3RlZCdcbiAgICAgICAgICAgICAgOiBsaXZlTW9kZSAmJiBzdHJlYW1GYWlsZWRcbiAgICAgICAgICAgICAgICA/ICdMaXZlIHN0cmVhbSBvZmZsaW5lIC0gY2hlY2sgdGhlIHBpcGVsaW5lIChWSVRFX1NUUkVBTV9VUkwpLiBTaG93aW5nIHNuYXBzaG90cy4nXG4gICAgICAgICAgICAgICAgOiAnU25hcHNob3QgbW9kZSAtIHNob3dpbmcgbGF0ZXN0IGRldGVjdGlvbiBpbWFnZSd9XG4gICAgICAgICAgPC9zcGFuPlxuICAgICAgICA8L2Rpdj5cbiAgICAgIDwvZGl2PlxuICAgIDwvZGl2PlxuICApO1xufTtcbiJdLCJmaWxlIjoiQzovVXNlcnMvREVMTC9EZXNrdG9wL1ZURC1tYWluL1Zpc3VhbC1UaHJlYWQtRGV0ZWN0aW9uLURhc2hib2FyZC1tYXN0ZXIvc3JjL2NvbXBvbmVudHMvQ2FtZXJhc1NjcmVlbi50c3gifQ==

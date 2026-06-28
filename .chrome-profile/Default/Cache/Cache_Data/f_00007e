@@ -1,0 +1,352 @@
+import { createHotContext as __vite__createHotContext } from "/@vite/client";import.meta.hot = __vite__createHotContext("/src/components/ConfigScreen.tsx");import.meta.env = {"BASE_URL": "/", "DEV": true, "MODE": "development", "PROD": false, "SSR": false, "VITE_API_URL": "http://localhost:8000", "VITE_STREAM_URL": "http://localhost:8090"};import __vite__cjsImport0_react_jsxDevRuntime from "/node_modules/.vite/deps/react_jsx-dev-runtime.js?v=d221d861"; const jsxDEV = __vite__cjsImport0_react_jsxDevRuntime["jsxDEV"];
+var _s = $RefreshSig$();
+import __vite__cjsImport1_react from "/node_modules/.vite/deps/react.js?v=d221d861"; const useEffect = __vite__cjsImport1_react["useEffect"]; const useState = __vite__cjsImport1_react["useState"];
+import { Shield, Network, Cpu, Bell, Eye, Lock, Save, RefreshCw, Check } from "/node_modules/.vite/deps/lucide-react.js?v=741507ac";
+import { TacticalCard, TacticalToggle, TacticalInput, TacticalButton } from "/src/components/TacticalComponents.tsx";
+const API_URL = import.meta.env?.VITE_API_URL || "http://localhost:8000";
+const STORAGE_KEY = "vtd_dashboard_settings";
+const DEFAULTS = {
+  nodeId: "NODE_ALPHA_01",
+  backendUrl: API_URL,
+  detectionSensitivity: 85,
+  fpFilter: 60,
+  threatIsolation: true,
+  encryptedUplink: true,
+  pushAlerts: true,
+  emailSummaries: false,
+  audioCues: true
+};
+function loadSettings() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
+  } catch {
+  }
+  return DEFAULTS;
+}
+export const ConfigScreen = () => {
+  _s();
+  const [settings, setSettings] = useState(loadSettings);
+  const [saved, setSaved] = useState(false);
+  useEffect(() => {
+    if (!saved) return;
+    const t = setTimeout(() => setSaved(false), 2e3);
+    return () => clearTimeout(t);
+  }, [saved]);
+  const update = (key, value) => setSettings((prev) => ({ ...prev, [key]: value }));
+  const handleSave = () => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+    setSaved(true);
+  };
+  const handleReset = () => {
+    setSettings(DEFAULTS);
+    localStorage.removeItem(STORAGE_KEY);
+  };
+  const fpLabel = settings.fpFilter > 66 ? "Aggressive" : settings.fpFilter > 33 ? "Balanced" : "Lenient";
+  return /* @__PURE__ */ jsxDEV("div", { className: "max-w-4xl mx-auto space-y-8", children: [
+    /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between items-center", children: [
+      /* @__PURE__ */ jsxDEV("h1", { className: "text-2xl font-headline font-black tracking-widest text-white uppercase", children: "System_Configuration" }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 70,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { className: "flex gap-3", children: [
+        /* @__PURE__ */ jsxDEV(TacticalButton, { variant: "ghost", className: "text-[10px] py-2", onClick: handleReset, children: [
+          /* @__PURE__ */ jsxDEV(RefreshCw, { className: "w-3 h-3 mr-2" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+            lineNumber: 73,
+            columnNumber: 13
+          }, this),
+          "Reset"
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 72,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(TacticalButton, { variant: "primary", className: "text-[10px] py-2", onClick: handleSave, children: [
+          saved ? /* @__PURE__ */ jsxDEV(Check, { className: "w-3 h-3 mr-2" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+            lineNumber: 77,
+            columnNumber: 22
+          }, this) : /* @__PURE__ */ jsxDEV(Save, { className: "w-3 h-3 mr-2" }, void 0, false, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+            lineNumber: 77,
+            columnNumber: 59
+          }, this),
+          saved ? "Saved" : "Save Changes"
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 76,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 71,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+      lineNumber: 69,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("p", { className: "text-[11px] font-mono text-text-dim/60 leading-relaxed bg-surface-low border-l-2 border-secondary-glow/30 p-4", children: [
+      "These are ",
+      /* @__PURE__ */ jsxDEV("span", { className: "text-secondary-glow", children: "dashboard-side preferences" }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 84,
+        columnNumber: 19
+      }, this),
+      " (saved in your browser). Detection thresholds on the camera device are set when launching the pipeline, e.g.",
+      /* @__PURE__ */ jsxDEV("span", { className: "text-white", children: " --fight-conf 0.55 --weapon-conf 0.70" }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 86,
+        columnNumber: 9
+      }, this),
+      ". The values here are a reference for the operator."
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+      lineNumber: 83,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [
+      /* @__PURE__ */ jsxDEV(TacticalCard, { title: "SECURITY_PROTOCOLS", icon: Shield, children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-6", children: [
+        /* @__PURE__ */ jsxDEV(TacticalToggle, { label: "AI Threat Isolation", description: "Highlight critical-threat nodes automatically.", active: settings.threatIsolation, onToggle: () => update("threatIsolation", !settings.threatIsolation) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 92,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(TacticalToggle, { label: "Encrypted Uplink", description: "Force 256-bit AES encryption on outgoing streams.", active: settings.encryptedUplink, onToggle: () => update("encryptedUplink", !settings.encryptedUplink) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 93,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 91,
+        columnNumber: 11
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 90,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(TacticalCard, { title: "NETWORK_TOPOLOGY", icon: Network, children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ jsxDEV(TacticalInput, { label: "Primary Node ID", value: settings.nodeId, onChange: (e) => update("nodeId", e.target.value), icon: Cpu }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 99,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(TacticalInput, { label: "Backend URL", value: settings.backendUrl, onChange: (e) => update("backendUrl", e.target.value), icon: Network }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 100,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-[9px] font-mono text-text-dim/40 pt-1", children: [
+          "Backend in use: ",
+          API_URL,
+          " (set via VITE_API_URL)"
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 101,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 98,
+        columnNumber: 11
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 97,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(TacticalCard, { title: "NOTIFICATION_ENGINE", icon: Bell, children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-6", children: [
+        /* @__PURE__ */ jsxDEV(TacticalToggle, { label: "Push Alerts", description: "Show live toast notifications on new detections.", active: settings.pushAlerts, onToggle: () => update("pushAlerts", !settings.pushAlerts) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 107,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(TacticalToggle, { label: "Email Summaries", description: "Generate daily intelligence reports.", active: settings.emailSummaries, onToggle: () => update("emailSummaries", !settings.emailSummaries) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 108,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV(TacticalToggle, { label: "Audio Cues", description: "Enable terminal alerts for critical events.", active: settings.audioCues, onToggle: () => update("audioCues", !settings.audioCues) }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 109,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 106,
+        columnNumber: 11
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 105,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV(TacticalCard, { title: "AI_MODEL_PARAMETERS", icon: Eye, children: /* @__PURE__ */ jsxDEV("div", { className: "space-y-4", children: [
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between text-[10px] font-mono mb-2", children: [
+            /* @__PURE__ */ jsxDEV("span", { className: "text-text-dim", children: "Detection Sensitivity" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+              lineNumber: 117,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { className: "text-primary-glow", children: [
+              settings.detectionSensitivity,
+              "%"
+            ] }, void 0, true, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+              lineNumber: 118,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+            lineNumber: 116,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "range",
+              min: 0,
+              max: 100,
+              value: settings.detectionSensitivity,
+              onChange: (e) => update("detectionSensitivity", Number(e.target.value)),
+              className: "w-full accent-primary-glow bg-surface-highest h-1 appearance-none cursor-pointer"
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+              lineNumber: 120,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 115,
+          columnNumber: 13
+        }, this),
+        /* @__PURE__ */ jsxDEV("div", { children: [
+          /* @__PURE__ */ jsxDEV("div", { className: "flex justify-between text-[10px] font-mono mb-2", children: [
+            /* @__PURE__ */ jsxDEV("span", { className: "text-text-dim", children: "False Positive Filter" }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+              lineNumber: 131,
+              columnNumber: 17
+            }, this),
+            /* @__PURE__ */ jsxDEV("span", { className: "text-secondary-glow", children: fpLabel }, void 0, false, {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+              lineNumber: 132,
+              columnNumber: 17
+            }, this)
+          ] }, void 0, true, {
+            fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+            lineNumber: 130,
+            columnNumber: 15
+          }, this),
+          /* @__PURE__ */ jsxDEV(
+            "input",
+            {
+              type: "range",
+              min: 0,
+              max: 100,
+              value: settings.fpFilter,
+              onChange: (e) => update("fpFilter", Number(e.target.value)),
+              className: "w-full accent-secondary-glow bg-surface-highest h-1 appearance-none cursor-pointer"
+            },
+            void 0,
+            false,
+            {
+              fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+              lineNumber: 134,
+              columnNumber: 15
+            },
+            this
+          )
+        ] }, void 0, true, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 129,
+          columnNumber: 13
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 114,
+        columnNumber: 11
+      }, this) }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 113,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+      lineNumber: 89,
+      columnNumber: 7
+    }, this),
+    /* @__PURE__ */ jsxDEV("div", { className: "bg-accent-error/5 border border-accent-error/20 p-6 flex items-start gap-4", children: [
+      /* @__PURE__ */ jsxDEV(Lock, { className: "w-6 h-6 text-accent-error shrink-0" }, void 0, false, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 148,
+        columnNumber: 9
+      }, this),
+      /* @__PURE__ */ jsxDEV("div", { children: [
+        /* @__PURE__ */ jsxDEV("h3", { className: "text-sm font-headline font-black text-accent-error uppercase mb-1", children: "Danger Zone" }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 150,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV("p", { className: "text-xs text-text-dim mb-4", children: "Clears all saved dashboard preferences from this browser and restores defaults." }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 151,
+          columnNumber: 11
+        }, this),
+        /* @__PURE__ */ jsxDEV(TacticalButton, { variant: "error", className: "text-[10px] py-2 px-6", onClick: handleReset, children: "Clear Saved Settings" }, void 0, false, {
+          fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+          lineNumber: 154,
+          columnNumber: 11
+        }, this)
+      ] }, void 0, true, {
+        fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+        lineNumber: 149,
+        columnNumber: 9
+      }, this)
+    ] }, void 0, true, {
+      fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+      lineNumber: 147,
+      columnNumber: 7
+    }, this)
+  ] }, void 0, true, {
+    fileName: "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx",
+    lineNumber: 68,
+    columnNumber: 5
+  }, this);
+};
+_s(ConfigScreen, "u3TbtQU1glYPag1c4ZQN9m6iepk=");
+_c = ConfigScreen;
+var _c;
+$RefreshReg$(_c, "ConfigScreen");
+import * as RefreshRuntime from "/@react-refresh";
+const inWebWorker = typeof WorkerGlobalScope !== "undefined" && self instanceof WorkerGlobalScope;
+if (import.meta.hot && !inWebWorker) {
+  if (!window.$RefreshReg$) {
+    throw new Error(
+      "@vitejs/plugin-react can't detect preamble. Something is wrong."
+    );
+  }
+  RefreshRuntime.__hmr_import(import.meta.url).then((currentExports) => {
+    RefreshRuntime.registerExportsForReactRefresh("C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx", currentExports);
+    import.meta.hot.accept((nextExports) => {
+      if (!nextExports) return;
+      const invalidateMessage = RefreshRuntime.validateRefreshBoundaryAndEnqueueUpdate("C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx", currentExports, nextExports);
+      if (invalidateMessage) import.meta.hot.invalidate(invalidateMessage);
+    });
+  });
+}
+function $RefreshReg$(type, id) {
+  return RefreshRuntime.register(type, "C:/Users/DELL/Desktop/VTD-main/Visual-Thread-Detection-Dashboard-master/src/components/ConfigScreen.tsx " + id);
+}
+function $RefreshSig$() {
+  return RefreshRuntime.createSignatureFunctionForTransform();
+}
+
+//# sourceMappingURL=data:application/json;base64,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O0FBQUE7QUFBQTtBQUFBO0FBQUE7QUFBQSxVQU1nRztBQUFBLGFBWGxHO0FBQUE7QUFBQTtBQUFBO0FBQUEsZUFhQTtBQUFBLFdBNUJGO0FBQUE7QUFBQTtBQUFBO0FBQUEsYUE2QkEsS0E5QkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQStCQTtBQUFBLFNBdkRGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0F3REE7QUFBQSxJQUVBLHVCQUFDLFNBQUksV0FBVSw4RUFDYjtBQUFBLDZCQUFDLFFBQUssV0FBVSx3Q0FBaEI7QUFBQTtBQUFBO0FBQUE7QUFBQSxhQUFvRDtBQUFBLE1BQ3BELHVCQUFDLFNBQ0M7QUFBQSwrQkFBQyxRQUFHLFdBQVUscUVBQW9FLDJCQUFsRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGVBQTZGO0FBQUEsUUFDN0YsdUJBQUMsT0FBRSxXQUFVLDhCQUE0QiwrRkFBekM7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUVBO0FBQUEsUUFDQSx1QkFBQyxrQkFBZSxTQUFRLFNBQVEsV0FBVSx5QkFBd0IsU0FBU0ssYUFBWSxvQ0FBdkY7QUFBQTtBQUFBO0FBQUE7QUFBQSxlQUVBO0FBQUEsV0FQRjtBQUFBO0FBQUE7QUFBQTtBQUFBLGFBUUE7QUFBQSxTQVZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsV0FXQTtBQUFBLE9BMUZGO0FBQUE7QUFBQTtBQUFBO0FBQUEsU0EyRkE7QUFFSjtBQUFFZixHQXZIV0QsY0FBWTtBQUFBLEtBQVpBO0FBQVksSUFBQXNCO0FBQUEsYUFBQUEsSUFBQSIsIm5hbWVzIjpbInVzZUVmZmVjdCIsInVzZVN0YXRlIiwiU2hpZWxkIiwiTmV0d29yayIsIkNwdSIsIkJlbGwiLCJFeWUiLCJMb2NrIiwiU2F2ZSIsIlJlZnJlc2hDdyIsIkNoZWNrIiwiVGFjdGljYWxDYXJkIiwiVGFjdGljYWxUb2dnbGUiLCJUYWN0aWNhbElucHV0IiwiVGFjdGljYWxCdXR0b24iLCJBUElfVVJMIiwiaW1wb3J0IiwiZW52IiwiVklURV9BUElfVVJMIiwiU1RPUkFHRV9LRVkiLCJERUZBVUxUUyIsIm5vZGVJZCIsImJhY2tlbmRVcmwiLCJkZXRlY3Rpb25TZW5zaXRpdml0eSIsImZwRmlsdGVyIiwidGhyZWF0SXNvbGF0aW9uIiwiZW5jcnlwdGVkVXBsaW5rIiwicHVzaEFsZXJ0cyIsImVtYWlsU3VtbWFyaWVzIiwiYXVkaW9DdWVzIiwibG9hZFNldHRpbmdzIiwicmF3IiwibG9jYWxTdG9yYWdlIiwiZ2V0SXRlbSIsIkpTT04iLCJwYXJzZSIsIkNvbmZpZ1NjcmVlbiIsIl9zIiwic2V0dGluZ3MiLCJzZXRTZXR0aW5ncyIsInNhdmVkIiwic2V0U2F2ZWQiLCJ0Iiwic2V0VGltZW91dCIsImNsZWFyVGltZW91dCIsInVwZGF0ZSIsImtleSIsInZhbHVlIiwicHJldiIsImhhbmRsZVNhdmUiLCJzZXRJdGVtIiwic3RyaW5naWZ5IiwiaGFuZGxlUmVzZXQiLCJyZW1vdmVJdGVtIiwiZnBMYWJlbCIsImUiLCJ0YXJnZXQiLCJOdW1iZXIiLCJfYyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlcyI6WyJDb25maWdTY3JlZW4udHN4Il0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IHVzZUVmZmVjdCwgdXNlU3RhdGUgfSBmcm9tICdyZWFjdCc7XG5pbXBvcnQgeyBTaGllbGQsIE5ldHdvcmssIENwdSwgQmVsbCwgRXllLCBMb2NrLCBTYXZlLCBSZWZyZXNoQ3csIENoZWNrIH0gZnJvbSAnbHVjaWRlLXJlYWN0JztcbmltcG9ydCB7IFRhY3RpY2FsQ2FyZCwgVGFjdGljYWxUb2dnbGUsIFRhY3RpY2FsSW5wdXQsIFRhY3RpY2FsQnV0dG9uIH0gZnJvbSAnLi9UYWN0aWNhbENvbXBvbmVudHMnO1xuXG5jb25zdCBBUElfVVJMOiBzdHJpbmcgPSAoaW1wb3J0Lm1ldGEgYXMgYW55KS5lbnY/LlZJVEVfQVBJX1VSTCB8fCAnaHR0cDovL2xvY2FsaG9zdDo4MDAwJztcbmNvbnN0IFNUT1JBR0VfS0VZID0gJ3Z0ZF9kYXNoYm9hcmRfc2V0dGluZ3MnO1xuXG5pbnRlcmZhY2UgRGFzaGJvYXJkU2V0dGluZ3Mge1xuICBub2RlSWQ6IHN0cmluZztcbiAgYmFja2VuZFVybDogc3RyaW5nO1xuICBkZXRlY3Rpb25TZW5zaXRpdml0eTogbnVtYmVyOyAvLyAwLTEwMFxuICBmcEZpbHRlcjogbnVtYmVyOyAvLyAwLTEwMFxuICB0aHJlYXRJc29sYXRpb246IGJvb2xlYW47XG4gIGVuY3J5cHRlZFVwbGluazogYm9vbGVhbjtcbiAgcHVzaEFsZXJ0czogYm9vbGVhbjtcbiAgZW1haWxTdW1tYXJpZXM6IGJvb2xlYW47XG4gIGF1ZGlvQ3VlczogYm9vbGVhbjtcbn1cblxuY29uc3QgREVGQVVMVFM6IERhc2hib2FyZFNldHRpbmdzID0ge1xuICBub2RlSWQ6ICdOT0RFX0FMUEhBXzAxJyxcbiAgYmFja2VuZFVybDogQVBJX1VSTCxcbiAgZGV0ZWN0aW9uU2Vuc2l0aXZpdHk6IDg1LFxuICBmcEZpbHRlcjogNjAsXG4gIHRocmVhdElzb2xhdGlvbjogdHJ1ZSxcbiAgZW5jcnlwdGVkVXBsaW5rOiB0cnVlLFxuICBwdXNoQWxlcnRzOiB0cnVlLFxuICBlbWFpbFN1bW1hcmllczogZmFsc2UsXG4gIGF1ZGlvQ3VlczogdHJ1ZVxufTtcblxuZnVuY3Rpb24gbG9hZFNldHRpbmdzKCk6IERhc2hib2FyZFNldHRpbmdzIHtcbiAgdHJ5IHtcbiAgICBjb25zdCByYXcgPSBsb2NhbFN0b3JhZ2UuZ2V0SXRlbShTVE9SQUdFX0tFWSk7XG4gICAgaWYgKHJhdykgcmV0dXJuIHsgLi4uREVGQVVMVFMsIC4uLkpTT04ucGFyc2UocmF3KSB9O1xuICB9IGNhdGNoIHtcbiAgICAvKiBpZ25vcmUgKi9cbiAgfVxuICByZXR1cm4gREVGQVVMVFM7XG59XG5cbmV4cG9ydCBjb25zdCBDb25maWdTY3JlZW4gPSAoKSA9PiB7XG4gIGNvbnN0IFtzZXR0aW5ncywgc2V0U2V0dGluZ3NdID0gdXNlU3RhdGU8RGFzaGJvYXJkU2V0dGluZ3M+KGxvYWRTZXR0aW5ncyk7XG4gIGNvbnN0IFtzYXZlZCwgc2V0U2F2ZWRdID0gdXNlU3RhdGUoZmFsc2UpO1xuXG4gIHVzZUVmZmVjdCgoKSA9PiB7XG4gICAgaWYgKCFzYXZlZCkgcmV0dXJuO1xuICAgIGNvbnN0IHQgPSBzZXRUaW1lb3V0KCgpID0+IHNldFNhdmVkKGZhbHNlKSwgMjAwMCk7XG4gICAgcmV0dXJuICgpID0+IGNsZWFyVGltZW91dCh0KTtcbiAgfSwgW3NhdmVkXSk7XG5cbiAgY29uc3QgdXBkYXRlID0gPEsgZXh0ZW5kcyBrZXlvZiBEYXNoYm9hcmRTZXR0aW5ncz4oa2V5OiBLLCB2YWx1ZTogRGFzaGJvYXJkU2V0dGluZ3NbS10pID0+XG4gICAgc2V0U2V0dGluZ3MoKHByZXYpID0+ICh7IC4uLnByZXYsIFtrZXldOiB2YWx1ZSB9KSk7XG5cbiAgY29uc3QgaGFuZGxlU2F2ZSA9ICgpID0+IHtcbiAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbShTVE9SQUdFX0tFWSwgSlNPTi5zdHJpbmdpZnkoc2V0dGluZ3MpKTtcbiAgICBzZXRTYXZlZCh0cnVlKTtcbiAgfTtcblxuICBjb25zdCBoYW5kbGVSZXNldCA9ICgpID0+IHtcbiAgICBzZXRTZXR0aW5ncyhERUZBVUxUUyk7XG4gICAgbG9jYWxTdG9yYWdlLnJlbW92ZUl0ZW0oU1RPUkFHRV9LRVkpO1xuICB9O1xuXG4gIGNvbnN0IGZwTGFiZWwgPSBzZXR0aW5ncy5mcEZpbHRlciA+IDY2ID8gJ0FnZ3Jlc3NpdmUnIDogc2V0dGluZ3MuZnBGaWx0ZXIgPiAzMyA/ICdCYWxhbmNlZCcgOiAnTGVuaWVudCc7XG5cbiAgcmV0dXJuIChcbiAgICA8ZGl2IGNsYXNzTmFtZT1cIm1heC13LTR4bCBteC1hdXRvIHNwYWNlLXktOFwiPlxuICAgICAgPGRpdiBjbGFzc05hbWU9XCJmbGV4IGp1c3RpZnktYmV0d2VlbiBpdGVtcy1jZW50ZXJcIj5cbiAgICAgICAgPGgxIGNsYXNzTmFtZT1cInRleHQtMnhsIGZvbnQtaGVhZGxpbmUgZm9udC1ibGFjayB0cmFja2luZy13aWRlc3QgdGV4dC13aGl0ZSB1cHBlcmNhc2VcIj5TeXN0ZW1fQ29uZmlndXJhdGlvbjwvaDE+XG4gICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBnYXAtM1wiPlxuICAgICAgICAgIDxUYWN0aWNhbEJ1dHRvbiB2YXJpYW50PVwiZ2hvc3RcIiBjbGFzc05hbWU9XCJ0ZXh0LVsxMHB4XSBweS0yXCIgb25DbGljaz17aGFuZGxlUmVzZXR9PlxuICAgICAgICAgICAgPFJlZnJlc2hDdyBjbGFzc05hbWU9XCJ3LTMgaC0zIG1yLTJcIiAvPlxuICAgICAgICAgICAgUmVzZXRcbiAgICAgICAgICA8L1RhY3RpY2FsQnV0dG9uPlxuICAgICAgICAgIDxUYWN0aWNhbEJ1dHRvbiB2YXJpYW50PVwicHJpbWFyeVwiIGNsYXNzTmFtZT1cInRleHQtWzEwcHhdIHB5LTJcIiBvbkNsaWNrPXtoYW5kbGVTYXZlfT5cbiAgICAgICAgICAgIHtzYXZlZCA/IDxDaGVjayBjbGFzc05hbWU9XCJ3LTMgaC0zIG1yLTJcIiAvPiA6IDxTYXZlIGNsYXNzTmFtZT1cInctMyBoLTMgbXItMlwiIC8+fVxuICAgICAgICAgICAge3NhdmVkID8gJ1NhdmVkJyA6ICdTYXZlIENoYW5nZXMnfVxuICAgICAgICAgIDwvVGFjdGljYWxCdXR0b24+XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9kaXY+XG5cbiAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQtWzExcHhdIGZvbnQtbW9ubyB0ZXh0LXRleHQtZGltLzYwIGxlYWRpbmctcmVsYXhlZCBiZy1zdXJmYWNlLWxvdyBib3JkZXItbC0yIGJvcmRlci1zZWNvbmRhcnktZ2xvdy8zMCBwLTRcIj5cbiAgICAgICAgVGhlc2UgYXJlIDxzcGFuIGNsYXNzTmFtZT1cInRleHQtc2Vjb25kYXJ5LWdsb3dcIj5kYXNoYm9hcmQtc2lkZSBwcmVmZXJlbmNlczwvc3Bhbj4gKHNhdmVkIGluIHlvdXIgYnJvd3NlcikuIERldGVjdGlvblxuICAgICAgICB0aHJlc2hvbGRzIG9uIHRoZSBjYW1lcmEgZGV2aWNlIGFyZSBzZXQgd2hlbiBsYXVuY2hpbmcgdGhlIHBpcGVsaW5lLCBlLmcuXG4gICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInRleHQtd2hpdGVcIj4gLS1maWdodC1jb25mIDAuNTUgLS13ZWFwb24tY29uZiAwLjcwPC9zcGFuPi4gVGhlIHZhbHVlcyBoZXJlIGFyZSBhIHJlZmVyZW5jZSBmb3IgdGhlIG9wZXJhdG9yLlxuICAgICAgPC9wPlxuXG4gICAgICA8ZGl2IGNsYXNzTmFtZT1cImdyaWQgZ3JpZC1jb2xzLTEgbWQ6Z3JpZC1jb2xzLTIgZ2FwLTZcIj5cbiAgICAgICAgPFRhY3RpY2FsQ2FyZCB0aXRsZT1cIlNFQ1VSSVRZX1BST1RPQ09MU1wiIGljb249e1NoaWVsZH0+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTZcIj5cbiAgICAgICAgICAgIDxUYWN0aWNhbFRvZ2dsZSBsYWJlbD1cIkFJIFRocmVhdCBJc29sYXRpb25cIiBkZXNjcmlwdGlvbj1cIkhpZ2hsaWdodCBjcml0aWNhbC10aHJlYXQgbm9kZXMgYXV0b21hdGljYWxseS5cIiBhY3RpdmU9e3NldHRpbmdzLnRocmVhdElzb2xhdGlvbn0gb25Ub2dnbGU9eygpID0+IHVwZGF0ZSgndGhyZWF0SXNvbGF0aW9uJywgIXNldHRpbmdzLnRocmVhdElzb2xhdGlvbil9IC8+XG4gICAgICAgICAgICA8VGFjdGljYWxUb2dnbGUgbGFiZWw9XCJFbmNyeXB0ZWQgVXBsaW5rXCIgZGVzY3JpcHRpb249XCJGb3JjZSAyNTYtYml0IEFFUyBlbmNyeXB0aW9uIG9uIG91dGdvaW5nIHN0cmVhbXMuXCIgYWN0aXZlPXtzZXR0aW5ncy5lbmNyeXB0ZWRVcGxpbmt9IG9uVG9nZ2xlPXsoKSA9PiB1cGRhdGUoJ2VuY3J5cHRlZFVwbGluaycsICFzZXR0aW5ncy5lbmNyeXB0ZWRVcGxpbmspfSAvPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L1RhY3RpY2FsQ2FyZD5cblxuICAgICAgICA8VGFjdGljYWxDYXJkIHRpdGxlPVwiTkVUV09SS19UT1BPTE9HWVwiIGljb249e05ldHdvcmt9PlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS00XCI+XG4gICAgICAgICAgICA8VGFjdGljYWxJbnB1dCBsYWJlbD1cIlByaW1hcnkgTm9kZSBJRFwiIHZhbHVlPXtzZXR0aW5ncy5ub2RlSWR9IG9uQ2hhbmdlPXsoZTogYW55KSA9PiB1cGRhdGUoJ25vZGVJZCcsIGUudGFyZ2V0LnZhbHVlKX0gaWNvbj17Q3B1fSAvPlxuICAgICAgICAgICAgPFRhY3RpY2FsSW5wdXQgbGFiZWw9XCJCYWNrZW5kIFVSTFwiIHZhbHVlPXtzZXR0aW5ncy5iYWNrZW5kVXJsfSBvbkNoYW5nZT17KGU6IGFueSkgPT4gdXBkYXRlKCdiYWNrZW5kVXJsJywgZS50YXJnZXQudmFsdWUpfSBpY29uPXtOZXR3b3JrfSAvPlxuICAgICAgICAgICAgPHAgY2xhc3NOYW1lPVwidGV4dC1bOXB4XSBmb250LW1vbm8gdGV4dC10ZXh0LWRpbS80MCBwdC0xXCI+QmFja2VuZCBpbiB1c2U6IHtBUElfVVJMfSAoc2V0IHZpYSBWSVRFX0FQSV9VUkwpPC9wPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L1RhY3RpY2FsQ2FyZD5cblxuICAgICAgICA8VGFjdGljYWxDYXJkIHRpdGxlPVwiTk9USUZJQ0FUSU9OX0VOR0lORVwiIGljb249e0JlbGx9PlxuICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwic3BhY2UteS02XCI+XG4gICAgICAgICAgICA8VGFjdGljYWxUb2dnbGUgbGFiZWw9XCJQdXNoIEFsZXJ0c1wiIGRlc2NyaXB0aW9uPVwiU2hvdyBsaXZlIHRvYXN0IG5vdGlmaWNhdGlvbnMgb24gbmV3IGRldGVjdGlvbnMuXCIgYWN0aXZlPXtzZXR0aW5ncy5wdXNoQWxlcnRzfSBvblRvZ2dsZT17KCkgPT4gdXBkYXRlKCdwdXNoQWxlcnRzJywgIXNldHRpbmdzLnB1c2hBbGVydHMpfSAvPlxuICAgICAgICAgICAgPFRhY3RpY2FsVG9nZ2xlIGxhYmVsPVwiRW1haWwgU3VtbWFyaWVzXCIgZGVzY3JpcHRpb249XCJHZW5lcmF0ZSBkYWlseSBpbnRlbGxpZ2VuY2UgcmVwb3J0cy5cIiBhY3RpdmU9e3NldHRpbmdzLmVtYWlsU3VtbWFyaWVzfSBvblRvZ2dsZT17KCkgPT4gdXBkYXRlKCdlbWFpbFN1bW1hcmllcycsICFzZXR0aW5ncy5lbWFpbFN1bW1hcmllcyl9IC8+XG4gICAgICAgICAgICA8VGFjdGljYWxUb2dnbGUgbGFiZWw9XCJBdWRpbyBDdWVzXCIgZGVzY3JpcHRpb249XCJFbmFibGUgdGVybWluYWwgYWxlcnRzIGZvciBjcml0aWNhbCBldmVudHMuXCIgYWN0aXZlPXtzZXR0aW5ncy5hdWRpb0N1ZXN9IG9uVG9nZ2xlPXsoKSA9PiB1cGRhdGUoJ2F1ZGlvQ3VlcycsICFzZXR0aW5ncy5hdWRpb0N1ZXMpfSAvPlxuICAgICAgICAgIDwvZGl2PlxuICAgICAgICA8L1RhY3RpY2FsQ2FyZD5cblxuICAgICAgICA8VGFjdGljYWxDYXJkIHRpdGxlPVwiQUlfTU9ERUxfUEFSQU1FVEVSU1wiIGljb249e0V5ZX0+XG4gICAgICAgICAgPGRpdiBjbGFzc05hbWU9XCJzcGFjZS15LTRcIj5cbiAgICAgICAgICAgIDxkaXY+XG4gICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPVwiZmxleCBqdXN0aWZ5LWJldHdlZW4gdGV4dC1bMTBweF0gZm9udC1tb25vIG1iLTJcIj5cbiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXRleHQtZGltXCI+RGV0ZWN0aW9uIFNlbnNpdGl2aXR5PC9zcGFuPlxuICAgICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT1cInRleHQtcHJpbWFyeS1nbG93XCI+e3NldHRpbmdzLmRldGVjdGlvblNlbnNpdGl2aXR5fSU8L3NwYW4+XG4gICAgICAgICAgICAgIDwvZGl2PlxuICAgICAgICAgICAgICA8aW5wdXRcbiAgICAgICAgICAgICAgICB0eXBlPVwicmFuZ2VcIlxuICAgICAgICAgICAgICAgIG1pbj17MH1cbiAgICAgICAgICAgICAgICBtYXg9ezEwMH1cbiAgICAgICAgICAgICAgICB2YWx1ZT17c2V0dGluZ3MuZGV0ZWN0aW9uU2Vuc2l0aXZpdHl9XG4gICAgICAgICAgICAgICAgb25DaGFuZ2U9eyhlKSA9PiB1cGRhdGUoJ2RldGVjdGlvblNlbnNpdGl2aXR5JywgTnVtYmVyKGUudGFyZ2V0LnZhbHVlKSl9XG4gICAgICAgICAgICAgICAgY2xhc3NOYW1lPVwidy1mdWxsIGFjY2VudC1wcmltYXJ5LWdsb3cgYmctc3VyZmFjZS1oaWdoZXN0IGgtMSBhcHBlYXJhbmNlLW5vbmUgY3Vyc29yLXBvaW50ZXJcIlxuICAgICAgICAgICAgICAvPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgICA8ZGl2PlxuICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT1cImZsZXgganVzdGlmeS1iZXR3ZWVuIHRleHQtWzEwcHhdIGZvbnQtbW9ubyBtYi0yXCI+XG4gICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPVwidGV4dC10ZXh0LWRpbVwiPkZhbHNlIFBvc2l0aXZlIEZpbHRlcjwvc3Bhbj5cbiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9XCJ0ZXh0LXNlY29uZGFyeS1nbG93XCI+e2ZwTGFiZWx9PC9zcGFuPlxuICAgICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgICAgPGlucHV0XG4gICAgICAgICAgICAgICAgdHlwZT1cInJhbmdlXCJcbiAgICAgICAgICAgICAgICBtaW49ezB9XG4gICAgICAgICAgICAgICAgbWF4PXsxMDB9XG4gICAgICAgICAgICAgICAgdmFsdWU9e3NldHRpbmdzLmZwRmlsdGVyfVxuICAgICAgICAgICAgICAgIG9uQ2hhbmdlPXsoZSkgPT4gdXBkYXRlKCdmcEZpbHRlcicsIE51bWJlcihlLnRhcmdldC52YWx1ZSkpfVxuICAgICAgICAgICAgICAgIGNsYXNzTmFtZT1cInctZnVsbCBhY2NlbnQtc2Vjb25kYXJ5LWdsb3cgYmctc3VyZmFjZS1oaWdoZXN0IGgtMSBhcHBlYXJhbmNlLW5vbmUgY3Vyc29yLXBvaW50ZXJcIlxuICAgICAgICAgICAgICAvPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgICAgPC9kaXY+XG4gICAgICAgIDwvVGFjdGljYWxDYXJkPlxuICAgICAgPC9kaXY+XG5cbiAgICAgIDxkaXYgY2xhc3NOYW1lPVwiYmctYWNjZW50LWVycm9yLzUgYm9yZGVyIGJvcmRlci1hY2NlbnQtZXJyb3IvMjAgcC02IGZsZXggaXRlbXMtc3RhcnQgZ2FwLTRcIj5cbiAgICAgICAgPExvY2sgY2xhc3NOYW1lPVwidy02IGgtNiB0ZXh0LWFjY2VudC1lcnJvciBzaHJpbmstMFwiIC8+XG4gICAgICAgIDxkaXY+XG4gICAgICAgICAgPGgzIGNsYXNzTmFtZT1cInRleHQtc20gZm9udC1oZWFkbGluZSBmb250LWJsYWNrIHRleHQtYWNjZW50LWVycm9yIHVwcGVyY2FzZSBtYi0xXCI+RGFuZ2VyIFpvbmU8L2gzPlxuICAgICAgICAgIDxwIGNsYXNzTmFtZT1cInRleHQteHMgdGV4dC10ZXh0LWRpbSBtYi00XCI+XG4gICAgICAgICAgICBDbGVhcnMgYWxsIHNhdmVkIGRhc2hib2FyZCBwcmVmZXJlbmNlcyBmcm9tIHRoaXMgYnJvd3NlciBhbmQgcmVzdG9yZXMgZGVmYXVsdHMuXG4gICAgICAgICAgPC9wPlxuICAgICAgICAgIDxUYWN0aWNhbEJ1dHRvbiB2YXJpYW50PVwiZXJyb3JcIiBjbGFzc05hbWU9XCJ0ZXh0LVsxMHB4XSBweS0yIHB4LTZcIiBvbkNsaWNrPXtoYW5kbGVSZXNldH0+XG4gICAgICAgICAgICBDbGVhciBTYXZlZCBTZXR0aW5nc1xuICAgICAgICAgIDwvVGFjdGljYWxCdXR0b24+XG4gICAgICAgIDwvZGl2PlxuICAgICAgPC9kaXY+XG4gICAgPC9kaXY+XG4gICk7XG59O1xuIl0sImZpbGUiOiJDOi9Vc2Vycy9ERUxML0Rlc2t0b3AvVlRELW1haW4vVmlzdWFsLVRocmVhZC1EZXRlY3Rpb24tRGFzaGJvYXJkLW1hc3Rlci9zcmMvY29tcG9uZW50cy9Db25maWdTY3JlZW4udHN4In0=
